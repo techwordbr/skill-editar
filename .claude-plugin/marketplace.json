@@ -1,0 +1,15 @@
+{
+  "name": "editar",
+  "owner": {
+    "name": "Augusto Ramos"
+  },
+  "description": "Skill de edição de vídeo Motion SaaS para o Claude Code.",
+  "plugins": [
+    {
+      "name": "editar",
+      "source": "./",
+      "description": "/editar + vídeo → página para escolher o estilo de edição → o Claude edita o vídeo no estilo Motion SaaS.",
+      "license": "MIT"
+    }
+  ]
+}

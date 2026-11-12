@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escolher Edição</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020814; --bg2:rgba(255,255,255,.06); --card:rgba(120,170,255,.07); --linha:rgba(170,205,255,.18); --texto:#f2f7ff; --suave:#9db4d6;
+  --cor:#0a84ff; --cor2:#5ac8fa; --ok:#5ac8fa;
+  --vidro:blur(22px) saturate(180%);
+  --brilho:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.06),inset 0 0 0 1px rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--texto);font-family:Inter,system-ui,sans-serif;min-height:100vh;padding-bottom:120px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20%;background:radial-gradient(38% 38% at 18% 12%,#0a84ff66,transparent 70%),radial-gradient(34% 34% at 86% 26%,#5ac8fa44,transparent 70%),radial-gradient(40% 40% at 60% 92%,#3d5afe55,transparent 70%),radial-gradient(30% 30% at 8% 80%,#64d2ff33,transparent 70%);animation:bgvivo 18s ease-in-out infinite alternate;z-index:-1}
+/* vidro líquido: painel translúcido + reflexo na borda de cima */
+.vidro,.video-box,.estilo,.grupo,.aba,.chip,textarea,.barra{backdrop-filter:var(--vidro);-webkit-backdrop-filter:var(--vidro)}
+.estilo::before,.grupo::before,.video-box::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,0) 38%,rgba(255,255,255,0) 70%,rgba(140,200,255,.10));z-index:0}
+@keyframes bgvivo{0%{transform:translate(0,0) scale(1)}40%{transform:translate(3%,2%) scale(1.06)}100%{transform:translate(-2%,4%) scale(1.02)}}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 16px}
+header{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+header .tit{flex:1;min-width:260px}
+h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-.03em;line-height:1.05}
+h1 span{background:linear-gradient(90deg,#5ac8fa,#0a84ff,#64d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--suave);margin-top:8px;font-size:15px}
+.video-box{position:relative;display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--linha);border-radius:22px;padding:10px;max-width:420px;box-shadow:var(--brilho),0 20px 40px -20px #000a}
+.video-box>*{position:relative;z-index:1}
+.video-box video{width:120px;max-height:120px;border-radius:10px;background:#000;object-fit:cover}
+.video-box .nome{font-weight:600;font-size:14px;word-break:break-all}
+.video-box .meta{color:var(--suave);font-size:12px;margin-top:4px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--suave);margin:30px 0 14px;font-weight:600}
+.abas{display:flex;gap:8px;flex-wrap:wrap}
+.aba,.chip{border:1px solid var(--linha);background:var(--bg2);color:var(--texto);padding:9px 14px;border-radius:999px;font:500 14px Inter;cursor:pointer;transition:.25s cubic-bezier(.2,.8,.2,1);box-shadow:var(--brilho)}
+.aba:hover,.chip:hover{border-color:rgba(170,215,255,.4);background:rgba(255,255,255,.1);transform:translateY(-1px)}
+.aba.on,.chip.on{background:linear-gradient(180deg,rgba(90,200,250,.55),rgba(10,132,255,.55));border-color:rgba(180,225,255,.6);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 20px -6px #0a84ffaa}
+.chip.on::before{content:"✓ ";font-weight:800}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.estilo{background:var(--card);border:1px solid var(--linha);border-radius:26px;padding:12px;cursor:pointer;position:relative;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .2s,box-shadow .3s;display:flex;flex-direction:column;box-shadow:var(--brilho),0 24px 48px -28px #000c}
+.estilo>*{position:relative;z-index:1}
+.estilo:hover{transform:translateY(-5px) scale(1.01);border-color:rgba(170,215,255,.38)}
+.estilo.on{border-color:rgba(120,200,255,.85);box-shadow:var(--brilho),0 0 0 3px #0a84ff55,0 24px 50px -20px #0a84ffaa;background:rgba(10,132,255,.14)}
+.estilo .num{position:absolute;top:18px;right:18px;z-index:30;width:30px;height:30px;border-radius:50%;background:linear-gradient(180deg,#5ac8fa,#0a84ff);color:#fff;font-weight:800;display:none;place-items:center;font-size:14px;box-shadow:inset 0 1px 0 #fff8,0 4px 14px #0008}
+.estilo.on .num{display:grid}
+.estilo h3{font-size:16px;font-weight:800;margin:12px 2px 4px;letter-spacing:-.01em}
+.estilo p{font-size:13px;color:var(--suave);line-height:1.45;margin:0 2px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:#ffffff10;color:#c9cfe0;margin:0 2px 0 2px}
+.palco{display:flex;justify-content:center;align-items:center;background:rgba(0,10,30,.45);border-radius:18px;padding:10px;height:300px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.tela{position:relative;overflow:hidden;border-radius:14px;background:#04101f;box-shadow:0 0 0 1px rgba(255,255,255,.08);container-type:inline-size;isolation:isolate}
+.tela.v{height:280px;aspect-ratio:9/16}
+.tela.h{width:100%;aspect-ratio:16/9}
+.palco.hz{height:auto;min-height:170px}
+.estilo:not(:hover) .tela *{animation-play-state:running}
+
+/* ---------- peças das prévias ---------- */
+.l{position:absolute}
+.fundo{position:absolute;inset:-30%;background:conic-gradient(from 0deg at 50% 50%,#04205a,#0a4fa8,#021638,#0b6fc4,#06286b,#04205a);animation:gira 9s linear infinite,troca 6s steps(1) infinite}
+.fundo.claro{background:conic-gradient(from 0deg,#ffffff,#e8f3ff,#f4f9ff,#dcefff,#ffffff);animation:gira 14s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+@keyframes troca{0%{filter:brightness(1)}33%{filter:brightness(1.35) saturate(1.2)}66%{filter:brightness(.8) hue-rotate(-18deg)}}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px);background-size:14px 14px;animation:desliza 4s linear infinite}
+.claro-grid{background-image:linear-gradient(#0000000a 1px,transparent 1px),linear-gradient(90deg,#0000000a 1px,transparent 1px)}
+@keyframes desliza{to{background-position:14px 28px}}
+.cam{position:absolute;overflow:hidden;background:radial-gradient(80% 60% at 30% 20%,#3a3f52,#191c27 70%);}
+.cam::after{content:"";position:absolute;right:8%;top:10%;width:22%;height:40%;border-radius:4px;background:linear-gradient(#ffcf7a55,#ff8a3d22);filter:blur(1px)}
+.pessoa{position:absolute;left:50%;bottom:0;width:78%;aspect-ratio:1;transform:translateX(-50%)}
+.pessoa svg{width:100%;height:100%;display:block}
+.zv{animation:zoomVivo 7s cubic-bezier(.45,.05,.25,1) infinite alternate}
+@keyframes zoomVivo{0%{transform:scale(1) translate(0,0)}22%{transform:scale(1.07) translate(-2%,1%)}38%{transform:scale(1.09) translate(-2.5%,1.2%)}62%{transform:scale(1.2) translate(2%,-1%)}78%{transform:scale(1.22) translate(2.4%,-1.2%)}100%{transform:scale(1.06) translate(0,0)}}
+.zf{animation:zoomForte 6s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes zoomForte{0%{transform:scale(1) translate(0,0)}18%{transform:scale(1.35) translate(-8%,6%)}30%{transform:scale(1.38) translate(-9%,6%)}48%{transform:scale(1.1) translate(6%,0)}64%{transform:scale(1.12) translate(7%,0)}82%{transform:scale(1.55) translate(0,10%)}100%{transform:scale(1) translate(0,0)}}
+.flut{animation:flut 5s ease-in-out infinite}
+@keyframes flut{0%,100%{transform:translate(0,0) rotate(-2deg)}30%{transform:translate(3%,-6%) rotate(1deg)}55%{transform:translate(4%,-7%) rotate(2deg)}80%{transform:translate(-2%,-2%) rotate(-1deg)}}
+/* cenas: entra rápido, deriva devagar, acelera na saída */
+.cA{animation:cenaA 6s infinite}
+.cB{animation:cenaB 6s infinite}
+@keyframes cenaA{0%{opacity:0;transform:scale(.55) translateY(25%) rotate(-6deg)}7%{opacity:1;transform:scale(1.08) translateY(-2%) rotate(1deg)}11%{transform:scale(1) translateY(0) rotate(0)}38%{opacity:1;transform:scale(1.05) translateY(-5%) rotate(1.5deg)}44%{transform:scale(1.06) translateY(-6%)}49%{opacity:0;transform:scale(.8) translateY(-30%) rotate(4deg)}100%{opacity:0}}
+@keyframes cenaB{0%,50%{opacity:0;transform:scale(.55) translateX(40%) rotate(6deg)}57%{opacity:1;transform:scale(1.08) translateX(-3%) rotate(-1deg)}61%{transform:scale(1) translateX(0) rotate(0)}88%{opacity:1;transform:scale(1.05) translateX(-4%) rotate(-1.5deg)}94%{transform:scale(1.06) translateX(-5%)}99%,100%{opacity:0;transform:scale(.8) translateX(-40%)}}
+.card-ui{background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.05));backdrop-filter:blur(8px);border:1px solid #ffffff33;border-radius:12px;box-shadow:0 14px 30px -10px #000c,inset 0 1px #ffffff14;padding:8%}
+.claro .card-ui,.card-ui.claro{background:#fff;border-color:#0000001a;box-shadow:0 18px 40px -16px #3b3b6b55}
+.barras{display:flex;align-items:flex-end;gap:8%;height:100%}
+.barras i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(var(--cor2),var(--cor));animation:sobe 3s cubic-bezier(.3,1.4,.4,1) infinite}
+.barras i:nth-child(1){height:35%}.barras i:nth-child(2){height:55%;animation-delay:.1s}.barras i:nth-child(3){height:45%;animation-delay:.2s}.barras i:nth-child(4){height:92%;animation-delay:.3s}
+@keyframes sobe{0%{transform:scaleY(.1);transform-origin:bottom}25%,100%{transform:scaleY(1);transform-origin:bottom}}
+.big{font-weight:900;letter-spacing:-.04em;color:#fff;text-align:center;line-height:.95;text-shadow:0 6px 24px #0009}
+.big b{color:var(--cor);transition:color .6s}
+.chipui{display:flex;align-items:center;gap:6%;background:#ffffff14;backdrop-filter:blur(6px);border:1px solid #ffffff26;border-radius:999px;padding:4% 7%;color:#fff;font-weight:700;white-space:nowrap}
+.dot{width:1.1em;height:1.1em;border-radius:50%;background:linear-gradient(var(--cor2),var(--cor));flex:none}
+.leg{left:6%;right:6%;text-align:center;font-weight:900;color:#fff;text-shadow:0 3px 0 #000,0 0 12px #000a;letter-spacing:-.02em}
+.leg b{color:var(--leg,#ffd60a);transition:color .6s}
+.w{display:inline-block;opacity:0;animation:palavra 4s infinite;margin-right:.25em}
+.w:nth-child(2){animation-delay:.35s}.w:nth-child(3){animation-delay:.7s}.w:nth-child(4){animation-delay:1.05s}
+@keyframes palavra{0%{opacity:0;transform:scale(1.8) translateY(20%)}6%{opacity:1;transform:scale(.92)}10%{transform:scale(1)}70%{opacity:1;transform:scale(1.04)}80%,100%{opacity:0;transform:scale(1.04)}}
+.janela{background:#11141f;border:1px solid #ffffff1f;border-radius:8px;overflow:hidden;box-shadow:0 30px 50px -20px #000}
+.janela .bar{height:9%;background:#ffffff0d;display:flex;gap:3%;align-items:center;padding-left:3%}
+.janela .bar i{width:5px;height:5px;border-radius:50%;background:#ff5f57}.janela .bar i:nth-child(2){background:#febc2e}.janela .bar i:nth-child(3){background:#28c840}
+.janela .corpo{display:flex;height:91%}
+.janela .lado{width:24%;background:#ffffff08;padding:5% 4%;display:flex;flex-direction:column;gap:9%}
+.janela .lado i{height:5px;border-radius:3px;background:#ffffff26}
+.janela .lado i:first-child{background:var(--cor2)}
+.janela .meio{flex:1;padding:5%;display:grid;grid-template-columns:1fr 1fr;gap:6%}
+.janela .meio div{border-radius:5px;background:#ffffff0f}
+.janela .meio div:first-child{grid-column:span 2;background:linear-gradient(90deg,#0a84ff66,#5ac8fa33)}
+.janela.claro{background:#fff;border-color:#0000001a}
+.janela.claro .bar{background:#f3f4f8}.janela.claro .lado{background:#f7f7fb}.janela.claro .lado i{background:#d9dce8}.janela.claro .meio div{background:#eef0f6}
+.t3d{animation:t3d 7s cubic-bezier(.5,0,.2,1) infinite}
+@keyframes t3d{0%{transform:perspective(500px) rotateY(-22deg) rotateX(8deg) scale(.9)}35%{transform:perspective(500px) rotateY(-18deg) rotateX(6deg) scale(.95)}50%{transform:perspective(500px) rotateY(6deg) rotateX(4deg) scale(1.55) translate(-12%,8%)}70%{transform:perspective(500px) rotateY(8deg) rotateX(3deg) scale(1.6) translate(-13%,9%)}100%{transform:perspective(500px) rotateY(-22deg) rotateX(8deg) scale(.9)}}
+.cursor{width:9%;aspect-ratio:1;animation:cursor 7s cubic-bezier(.6,0,.2,1) infinite;z-index:5}
+.cursor::before{content:"";position:absolute;inset:0;background:#fff;clip-path:polygon(0 0,0 80%,25% 60%,45% 100%,58% 94%,40% 56%,75% 55%);filter:drop-shadow(0 1px 1px #000)}
+@keyframes cursor{0%{left:70%;top:70%}30%{left:40%;top:38%}36%{left:40%;top:38%;transform:scale(.8)}40%{transform:scale(1)}70%{left:58%;top:55%}100%{left:70%;top:70%}}
+.pipV{animation:pipV 7s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes pipV{0%,8%{left:0;top:0;width:100%;height:100%;border-radius:0}16%,84%{left:60%;top:64%;width:34%;height:30%;border-radius:12px}92%,100%{left:0;top:0;width:100%;height:100%;border-radius:0}}
+.somePessoa{animation:somePessoa 7s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes somePessoa{0%,10%{opacity:1;transform:scale(1)}18%,82%{opacity:0;transform:scale(1.25)}90%,100%{opacity:1;transform:scale(1)}}
+.mostraEl{animation:mostraEl 7s ease infinite}
+@keyframes mostraEl{0%,12%{opacity:0}20%,80%{opacity:1}88%,100%{opacity:0}}
+.cartaoV{border-radius:10px;box-shadow:0 12px 26px -8px #000c,0 0 0 2px #ffffff22;animation:flutSuave 6s ease-in-out infinite}
+@keyframes flutSuave{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-4%) rotate(-1.5deg)}70%{transform:translateY(-5%) rotate(1deg)}}
+.bolha{border-radius:50%;box-shadow:0 0 0 3px var(--cor2),0 12px 26px -8px #000c}
+.item{display:flex;align-items:center;gap:6%;color:#fff;font-weight:700;opacity:0;animation:item 6s infinite}
+.item:nth-child(2){animation-delay:.5s}.item:nth-child(3){animation-delay:1s}
+@keyframes item{0%{opacity:0;transform:translateX(30%)}8%{opacity:1;transform:translateX(-3%)}12%{transform:translateX(0)}80%{opacity:1;transform:translateX(-4%)}88%,100%{opacity:0;transform:translateX(-30%)}}
+.contorno{color:transparent;-webkit-text-stroke:1.5px #ffffff55;font-weight:900;letter-spacing:-.05em;animation:deriva 8s ease-in-out infinite alternate}
+@keyframes deriva{0%{transform:translateX(-10%) scale(1)}45%{transform:translateX(5%) scale(1.06)}55%{transform:translateX(7%) scale(1.07)}100%{transform:translateX(12%) scale(1.12)}}
+.mini{display:grid;gap:4px;width:100%;height:100%;padding:10%;grid-template-columns:1fr 1fr}
+.mini div{border-radius:6px;background:#ffffff10;border:1px solid #ffffff1a;position:relative;overflow:hidden}
+.mini div::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#ffffff22 50%,transparent 70%);animation:brilho 2.4s infinite}
+.mini div:nth-child(2)::after{animation-delay:.4s}.mini div:nth-child(3)::after{animation-delay:.8s}.mini div:nth-child(4)::after{animation-delay:1.2s}
+@keyframes brilho{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+
+/* ---------- ajustes ---------- */
+.ajustes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.grupo{position:relative;background:var(--card);border:1px solid var(--linha);border-radius:24px;padding:16px;box-shadow:var(--brilho),0 20px 40px -28px #000c}
+.grupo>*{position:relative;z-index:1}
+.grupo h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.grupo .dica{font-size:12px;color:var(--suave);margin-bottom:12px}
+.grupo .chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:7px 12px;font-size:13px}
+.cores{display:flex;gap:8px;flex-wrap:wrap}
+.cor{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:.2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 10px -4px #000a}
+.cor.on{border-color:#fff;transform:scale(1.12);box-shadow:0 0 0 3px #0a84ff88,0 4px 14px -2px #000a}
+.cor.mais{display:grid;place-items:center;background:conic-gradient(#ff453a,#ffd60a,#30d158,#5ac8fa,#0a84ff,#bf5af2,#ff453a);color:#fff;font-weight:900;font-size:18px;text-shadow:0 1px 3px #000;position:relative;overflow:hidden}
+.cor.mais input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.qtd{font-size:11px;font-weight:600;color:#7cc4ff;margin-left:6px}
+.paleta{display:flex;align-items:center;gap:8px;border:1px solid var(--linha);background:var(--bg2);color:var(--texto);padding:7px 12px 7px 8px;border-radius:999px;font:500 13px Inter;cursor:pointer;transition:.25s;box-shadow:var(--brilho);backdrop-filter:var(--vidro)}
+.paleta:hover{transform:translateY(-1px);border-color:rgba(170,215,255,.4)}
+.paleta.on{background:linear-gradient(180deg,rgba(90,200,250,.45),rgba(10,132,255,.45));border-color:rgba(180,225,255,.6)}
+.tiras{display:flex;border-radius:999px;overflow:hidden;box-shadow:0 0 0 1px #ffffff40}
+.tiras i{width:10px;height:18px}
+textarea{width:100%;min-height:90px;background:var(--bg2);color:var(--texto);border:1px solid var(--linha);border-radius:20px;box-shadow:var(--brilho);padding:12px;font:14px Inter;resize:vertical}
+textarea:focus{outline:2px solid var(--cor);border-color:transparent}
+
+/* ---------- barra final ---------- */
+.barra{position:fixed;left:12px;right:12px;bottom:12px;background:rgba(10,40,90,.35);border:1px solid var(--linha);border-radius:28px;box-shadow:var(--brilho),0 20px 50px -10px #000c;z-index:50}
+.barra .in{max-width:1280px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:16px}
+.resumo{flex:1;font-size:13px;color:var(--suave);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resumo b{color:var(--texto)}
+.btn{border:1px solid rgba(200,235,255,.6);cursor:pointer;font:800 16px Inter;color:#fff;padding:14px 26px;border-radius:999px;background:linear-gradient(90deg,#0a84ff,#5ac8fa,#0a84ff);background-size:200% 100%;animation:shine 4s linear infinite;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 6px rgba(0,40,120,.35),0 10px 30px -8px #0a84ffcc;white-space:nowrap;transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.btn:disabled{opacity:.4;cursor:not-allowed;animation:none}
+@keyframes shine{to{background-position:200% 0}}
+.feito{position:fixed;inset:0;background:var(--bg);display:none;place-items:center;z-index:100;text-align:center;padding:24px}
+.feito.on{display:grid}
+.feito .ic{width:90px;height:90px;border-radius:50%;margin:0 auto 22px;background:linear-gradient(135deg,var(--ok),var(--cor2));display:grid;place-items:center;font-size:44px;animation:pop .6s cubic-bezier(.3,1.6,.4,1)}
+@keyframes pop{from{transform:scale(0)}}
+.feito h2{font-size:30px;color:var(--texto);text-transform:none;letter-spacing:-.02em;font-weight:900;margin:0 0 8px}
+.feito p{color:var(--suave)}
+.erro{color:#fb7185;font-size:13px}
+@media (max-width:640px){.barra .in{flex-direction:column;align-items:stretch}.resumo{white-space:normal}.video-box{max-width:100%}}
+@media (prefers-reduced-motion:reduce){.tela *{animation-duration:20s!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tit">
+      <h1>Como esse vídeo vai ser <span>editado?</span></h1>
+      <p class="sub">Pode marcar <b>quantas opções quiser</b> em tudo: estilos viram um mix (na ordem que tu clicar) e nos detalhes eu alterno entre as marcadas.</p>
+    </div>
+    <div class="video-box" id="videoBox">
+      <video id="vid" muted playsinline loop preload="metadata"></video>
+      <div><div class="nome" id="vNome">Carregando…</div><div class="meta" id="vMeta"></div></div>
+    </div>
+  </header>
+
+  <h2>Formato</h2>
+  <div class="abas" id="abasFormato"></div>
+
+  <h2>Estilo de edição</h2>
+  <div class="grade" id="grade"></div>
+
+  <h2>Cores</h2>
+  <div class="ajustes" id="cores"></div>
+
+  <h2>Detalhes</h2>
+  <div class="ajustes" id="ajustes"></div>
+
+  <h2>Observações (opcional)</h2>
+  <textarea id="obs" placeholder="Ex.: no começo quero um gancho forte, mostra o logo do ChatGPT quando eu falar dele, corta a parte que eu errei no minuto 1…"></textarea>
+</div>
+
+<div class="barra"><div class="in">
+  <div class="resumo" id="resumo">Escolhe pelo menos um estilo.</div>
+  <span class="erro" id="erro"></span>
+  <button class="btn" id="enviar" disabled>Editar assim →</button>
+</div></div>
+
+<div class="feito" id="feito"><div>
+  <div class="ic">✓</div>
+  <h2>Escolha enviada!</h2>
+  <p>Pode voltar pro chat. Já estou começando a edição e te mando as prévias.</p>
+</div></div>
+
+<script>
+const PESSOA = `<svg viewBox="0 0 100 100"><defs><linearGradient id="pele" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1d3bd"/><stop offset="1" stop-color="#c99a7c"/></linearGradient><linearGradient id="camisa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b4a6b"/><stop offset="1" stop-color="#1c2438"/></linearGradient></defs><path d="M14 100C14 74 31 61 50 61S86 74 86 100Z" fill="url(#camisa)"/><rect x="43" y="50" width="14" height="14" rx="5" fill="#c99a7c"/><ellipse cx="50" cy="38" rx="15" ry="17" fill="url(#pele)"/><path d="M35 34c0-12 7-18 15-18s15 5 15 16c-3-5-8-7-15-7s-12 3-15 9Z" fill="#2a1d17"/></svg>`;
+const cam = (cls='', style='') => `<div class="cam l ${cls}" style="${style}"><div class="pessoa">${PESSOA}</div></div>`;
+const camZ = (cls='', style='', z='zv') => `<div class="cam l ${cls}" style="${style}"><div class="l ${z}" style="inset:0"><div class="pessoa">${PESSOA}</div></div></div>`;
+
+const ESTILOS = [
+  {id:'tela-dividida', f:'9:16', nome:'Tela dividida', tags:['Shorts','Reels','TikTok'],
+   desc:'Informação na metade de cima trocando o tempo todo, tu na metade de baixo com zoom vivo. Legenda no meio.',
+   html:`<div class="l" style="inset:0 0 50% 0;overflow:hidden"><div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l card-ui cA" style="left:14%;top:16%;width:72%;height:64%"><div class="barras"><i></i><i></i><i></i><i></i></div></div>
+     <div class="l big cB" style="left:0;right:0;top:28%;font-size:22cqw">+247<b>%</b></div></div>
+     ${camZ('','left:0;top:50%;width:100%;height:50%')}
+     <div class="l leg" style="top:46%;font-size:8cqw"><span class="w">isso&nbsp;</span><span class="w">aqui&nbsp;</span><span class="w"><b>muda</b>&nbsp;</span><span class="w"><b>tudo</b></span></div>`},
+  {id:'ilustrativa-cartao', f:'9:16', nome:'Ilustrativa + cartão', tags:['Shorts','Explicação'],
+   desc:'Os elementos tomam a tela enquanto tu explica. Tu encolhe num cartãozinho no canto e volta pra tela cheia.',
+   html:`<div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l mostraEl" style="inset:0"><div class="l card-ui cA" style="left:10%;top:14%;width:80%;height:34%"><div class="barras"><i></i><i></i><i></i><i></i></div></div>
+     <div class="l cB" style="left:8%;top:18%;width:84%"><div class="chipui flut" style="font-size:7cqw"><span class="dot"></span>Automação</div><div class="big" style="font-size:15cqw;margin-top:12%">3 <b>passos</b></div></div></div>
+     ${camZ('pipV','','zv')}`},
+  {id:'legenda-cinetica', f:'9:16', nome:'Legenda cinética', tags:['Shorts','Fala direta'],
+   desc:'Tu em tela cheia, zoom que nunca para (acelera e desacelera), palavras gigantes entrando sincronizadas com a fala.',
+   html:`${camZ('','inset:0','zf')}
+     <div class="l leg" style="top:60%;font-size:12cqw;line-height:1"><span class="w">NINGUÉM&nbsp;</span><span class="w">TE&nbsp;</span><span class="w"><b>CONTA</b>&nbsp;</span><span class="w"><b>ISSO</b></span></div>`},
+  {id:'holograma', f:'9:16', nome:'Recorte / holograma', tags:['Shorts','Impacto'],
+   desc:'Tu recortado do fundo. O fundo troca a cada ideia, com texto gigante atrás de ti e elementos passando na frente.',
+   html:`<div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l contorno" style="top:14%;left:-10%;font-size:48cqw;white-space:nowrap">IA IA</div>
+     <div class="l zv" style="inset:0"><div class="pessoa" style="width:95%">${PESSOA}</div></div>
+     <div class="l chipui cA" style="left:8%;top:40%;font-size:6.5cqw"><span class="dot"></span>GPT-5</div>
+     <div class="l chipui cB" style="right:8%;top:52%;font-size:6.5cqw"><span class="dot"></span>Grátis</div>`},
+  {id:'tela-cheia-elementos', f:'9:16', nome:'Só elementos', tags:['Shorts','B-roll'],
+   desc:'Na hora da explicação tu some, a tela fica 100% com animação. Tu volta no gancho e no final.',
+   html:`<div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l mostraEl" style="inset:0"><div class="l janela t3d" style="left:8%;top:28%;width:84%;height:34%"><div class="bar"><i></i><i></i><i></i></div><div class="corpo"><div class="lado"><i></i><i></i><i></i></div><div class="meio"><div></div><div></div><div></div></div></div></div>
+     <div class="l big" style="left:0;right:0;top:9%;font-size:11cqw">passo <b>1</b></div></div>
+     ${camZ('somePessoa','inset:0')}`},
+  {id:'ilustrativa-pip', f:'16:9', nome:'Ilustrativa + PiP', tags:['YouTube','Aula'],
+   desc:'Tela cheia de elementos e interfaces em 3D. Tu num cartão vertical no lado direito, flutuando.',
+   html:`<div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l janela t3d" style="left:6%;top:16%;width:58%;height:68%"><div class="bar"><i></i><i></i><i></i></div><div class="corpo"><div class="lado"><i></i><i></i><i></i><i></i></div><div class="meio"><div></div><div></div><div></div></div></div></div>
+     <div class="l cursor"></div>
+     ${cam('cartaoV','left:72%;top:14%;width:22%;height:72%')}`},
+  {id:'lado-a-lado', f:'16:9', nome:'Lado a lado', tags:['YouTube','Lista'],
+   desc:'Tu de um lado com zoom vivo, do outro os pontos entrando um a um, com fundo que muda a cada tópico.',
+   html:`<div class="fundo"></div>
+     ${camZ('','left:0;top:0;width:44%;height:100%')}
+     <div class="l" style="left:50%;top:18%;width:46%;display:grid;gap:10cqw;font-size:4.2cqw">
+       <div class="item"><span class="dot"></span>Ideia rápida</div><div class="item"><span class="dot"></span>Roteiro com IA</div><div class="item"><span class="dot"></span>Edição em código</div></div>`},
+  {id:'review-software', f:'16:9', nome:'Review de software', tags:['YouTube','Fundo branco'],
+   desc:'Fundo branco, interface do programa recriada em código, inclinada em 3D, câmera chegando perto de cada detalhe. Tu em cartão vertical à direita.',
+   html:`<div class="fundo claro"></div><div class="grid-bg claro-grid"></div>
+     <div class="l" style="left:5%;top:7%;font:900 6cqw Inter;color:#0b0b14;letter-spacing:-.04em">Gravação <span style="color:#0a84ff">automática</span></div>
+     <div class="l janela claro t3d" style="left:6%;top:26%;width:58%;height:64%"><div class="bar"><i></i><i></i><i></i></div><div class="corpo"><div class="lado"><i></i><i></i><i></i><i></i></div><div class="meio"><div></div><div></div><div></div></div></div></div>
+     <div class="l cursor"></div>
+     ${cam('cartaoV','left:72%;top:14%;width:22%;height:72%')}`},
+  {id:'zoom-dinamico', f:'16:9', nome:'Zoom dinâmico', tags:['YouTube','Fala direta'],
+   desc:'Tu sempre em tela, mas a câmera nunca para: aproxima, reenquadra, acelera e freia. Títulos fortes nas frases-chave.',
+   html:`${camZ('','inset:0','zf')}
+     <div class="l big cA" style="left:5%;top:30%;font-size:9cqw;text-align:left">ISSO É <br><b>ABSURDO</b></div>
+     <div class="l chipui cB" style="right:6%;top:18%;font-size:3.6cqw"><span class="dot"></span>Dica nº 2</div>`},
+  {id:'slides', f:'16:9', nome:'Apresentação animada', tags:['YouTube','Curso'],
+   desc:'Títulos e listas grandes, animados como slides vivos. Tu numa bolha redonda no canto, sempre visível.',
+   html:`<div class="fundo"></div><div class="grid-bg"></div>
+     <div class="l big" style="left:8%;top:12%;font-size:7.5cqw;text-align:left">O método <b>3x</b></div>
+     <div class="l" style="left:9%;top:42%;display:grid;gap:7cqw;font-size:3.6cqw">
+       <div class="item"><span class="dot"></span>Grava sem roteiro</div><div class="item"><span class="dot"></span>A IA corta os erros</div><div class="item"><span class="dot"></span>Posta no mesmo dia</div></div>
+     ${cam('bolha flut','right:6%;bottom:8%;width:24%;aspect-ratio:1')}`},
+  {id:'automatico', f:'ambos', nome:'Automático (mix)', tags:['Tu decide'],
+   desc:'Eu escolho cena por cena o que encaixa melhor com o que tu tá falando, misturando os estilos acima.',
+   html:`<div class="fundo"></div><div class="mini"><div></div><div></div><div></div><div></div></div>
+     <div class="l big" style="left:0;right:0;top:50%;transform:translateY(-50%);font-size:12cqw">✦ <b>mix</b></div>`},
+];
+
+const AJUSTES = [
+  {id:'fundo', t:'Fundo', d:'Na Motion SaaS o fundo muda o tempo todo.', op:['Escuro (trocando)','Branco (trocando)','Alternar escuro/branco','Eu decido'], v:'Escuro (trocando)'},
+  {id:'ritmo', t:'Ritmo do movimento', d:'Zoom e elementos nunca param; aqui é a intensidade.', op:['Suave','Médio','Agressivo'], v:'Médio'},
+  {id:'legenda', t:'Legenda', d:'', op:['Palavra por palavra','Frase curta','Só palavras-chave','Sem legenda'], v:'Palavra por palavra'},
+  {id:'cortes', t:'Cortes', d:'Tirar respiração, silêncio e erros.', op:['Cortar pausas e erros','Só pausas longas','Não cortar'], v:'Cortar pausas e erros'},
+  {id:'sfx', t:'Efeitos sonoros', d:'Whoosh, pops de UI, cliques (Pixabay).', op:['Baixo','Médio','Sem SFX'], v:'Baixo'},
+  {id:'musica', t:'Música de fundo', d:'', op:['Sem música','Música baixinha'], v:'Sem música'},
+  {id:'logos', t:'Logos e ícones', d:'Quando eu citar marcas/ferramentas.', op:['Logos 3D reais','Ícones simples','Não mostrar'], v:'Logos 3D reais'},
+  {id:'motor', t:'Motor da edição', d:'O que gera o vídeo. O estilo é o mesmo nos dois.', op:['Eu decido','HyperFrames','Remotion'], v:'Eu decido'},
+  {id:'gancho', t:'Começo (gancho)', d:'Primeiros 3 segundos.', op:['Gancho forte com título','Começar direto','Eu decido'], v:'Gancho forte com título'},
+];
+const CORES = ['#0a84ff','#5ac8fa','#3d5afe','#64d2ff','#bf5af2','#30d158','#ffd60a','#ffffff'];
+
+const estado = {formato:'9:16', estilos:[], ajustes:Object.fromEntries(AJUSTES.map(a=>[a.id,[a.v]])), cor:[CORES[0]]};
+// opções que excluem as outras do mesmo grupo
+const EXCLUSIVA = /^(Sem |Não |Eu decido)/;
+function alterna(g, v){
+  let l = estado.ajustes[g] || [];
+  if(l.includes(v)){ if(l.length>1) l = l.filter(x=>x!==v); }
+  else if(EXCLUSIVA.test(v)) l = [v];
+  else l = [...l.filter(x=>!EXCLUSIVA.test(x)), v];
+  estado.ajustes[g] = l;
+}
+const txt = (g) => (estado.ajustes[g]||[]).join(' + ').toLowerCase();
+
+function abas(){
+  const el = document.getElementById('abasFormato');
+  el.innerHTML = ['9:16','16:9','Os dois'].map(f=>`<button class="aba ${estado.formato===f?'on':''}" data-f="${f}">${f==='9:16'?'Vertical 9:16 (Shorts)':f==='16:9'?'Horizontal 16:9 (YouTube)':'Os dois formatos'}</button>`).join('');
+  el.querySelectorAll('.aba').forEach(b=>b.onclick=()=>{estado.formato=b.dataset.f;
+    if(estado.formato!=='Os dois') estado.estilos=estado.estilos.filter(id=>{const f=ESTILOS.find(e=>e.id===id).f;return f==='ambos'||f===estado.formato;});
+    abas();grade();resumo();});
+}
+function grade(){
+  const g = document.getElementById('grade');
+  const lista = ESTILOS.filter(e=>estado.formato==='Os dois'||e.f===estado.formato||e.f==='ambos');
+  g.innerHTML = lista.map(e=>{
+    const v = e.f==='16:9' ? 'h' : (e.f==='ambos' ? (estado.formato==='16:9'?'h':'v') : 'v');
+    const i = estado.estilos.indexOf(e.id);
+    return `<div class="estilo ${i>=0?'on':''}" data-id="${e.id}"><div class="num">${i+1}</div>
+      <div class="palco ${v==='h'?'hz':''}"><div class="tela ${v}">${e.html}</div></div>
+      <h3>${e.nome}</h3><div>${e.tags.map(t=>`<span class="tag">${t}</span>`).join('')} <span class="tag">${e.f==='ambos'?'9:16 e 16:9':e.f}</span></div><p style="margin-top:8px">${e.desc}</p></div>`;
+  }).join('');
+  g.querySelectorAll('.estilo').forEach(c=>c.onclick=()=>{
+    const id=c.dataset.id, i=estado.estilos.indexOf(id);
+    if(i>=0) estado.estilos.splice(i,1); else estado.estilos.push(id);
+    grade(); resumo();
+  });
+}
+function ajustes(){
+  const a = document.getElementById('ajustes');
+  a.innerHTML = AJUSTES.map(x=>`<div class="grupo"><h4>${x.t}</h4>${x.d?`<div class="dica">${x.d}</div>`:'<div class="dica">&nbsp;</div>'}<div class="chips">${x.op.map(o=>`<button class="chip ${estado.ajustes[x.id].includes(o)?'on':''}" data-g="${x.id}" data-v="${o}">${o}</button>`).join('')}</div></div>`).join('')
+;
+  a.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{alterna(b.dataset.g,b.dataset.v);ajustes();resumo();});
+}
+
+/* ---------- cores ---------- */
+const PAPEIS = [
+  {id:'destaque', t:'Destaque', d:'Títulos, números grandes e palavras fortes.'},
+  {id:'efeitos', t:'Efeitos', d:'Brilhos, linhas, barras, bolinhas, contornos e transições.'},
+  {id:'legenda', t:'Legenda', d:'A cor da palavra-chave na legenda.'},
+];
+const PALETAS = [
+  {n:'Azul glass', destaque:['#0a84ff'], efeitos:['#5ac8fa'], legenda:['#ffd60a']},
+  {n:'Neon', destaque:['#bf5af2'], efeitos:['#22d3ee'], legenda:['#30d158']},
+  {n:'Fogo', destaque:['#ff453a'], efeitos:['#ff9f0a'], legenda:['#ffd60a']},
+  {n:'Dinheiro', destaque:['#30d158'], efeitos:['#a3e635'], legenda:['#ffd60a']},
+  {n:'Rosa choque', destaque:['#ff375f'], efeitos:['#bf5af2'], legenda:['#ffffff']},
+  {n:'Mono', destaque:['#ffffff'], efeitos:['#9db4d6'], legenda:['#ffffff']},
+  {n:'Arco-íris', destaque:['#0a84ff','#ff375f','#30d158'], efeitos:['#5ac8fa','#ff9f0a','#bf5af2'], legenda:['#ffd60a','#64d2ff']},
+];
+estado.cores = {destaque:['#0a84ff'], efeitos:['#5ac8fa'], legenda:['#ffd60a']};
+estado.coresExtras = {destaque:[], efeitos:[], legenda:[]};
+const mesma = (a,b) => a.length===b.length && a.every((x,i)=>x===b[i]);
+function cores(){
+  const el = document.getElementById('cores');
+  const pal = PALETAS.map((p,i)=>{
+    const on = PAPEIS.every(r=>mesma(p[r.id],estado.cores[r.id]));
+    const tiras = [...p.destaque,...p.efeitos,...p.legenda].map(c=>`<i style="background:${c}"></i>`).join('');
+    return `<button class="paleta ${on?'on':''}" data-p="${i}"><span class="tiras">${tiras}</span>${p.n}</button>`;
+  }).join('');
+  el.innerHTML = `<div class="grupo" style="grid-column:1/-1"><h4>Paletas prontas</h4><div class="dica">Um clique já preenche as três cores. Depois dá pra mexer em cada uma.</div><div class="chips">${pal}</div></div>`
+   + PAPEIS.map(r=>{
+      const lista = [...new Set([...CORES, ...estado.coresExtras[r.id], ...estado.cores[r.id]])];
+      return `<div class="grupo"><h4>${r.t} <span class="qtd">${estado.cores[r.id].length>1?estado.cores[r.id].length+' cores · alterno por cena':''}</span></h4><div class="dica">${r.d}</div>
+        <div class="cores">${lista.map(c=>`<div class="cor ${estado.cores[r.id].includes(c)?'on':''}" data-r="${r.id}" data-c="${c}" style="background:${c}" title="${c}"></div>`).join('')}
+        <label class="cor mais" title="Escolher qualquer cor">+<input type="color" data-r="${r.id}" value="${estado.cores[r.id][0]}"></label></div></div>`;
+    }).join('');
+  el.querySelectorAll('.paleta').forEach(b=>b.onclick=()=>{const p=PALETAS[b.dataset.p];
+    PAPEIS.forEach(r=>estado.cores[r.id]=[...p[r.id]]); cores(); aplicaCores();});
+  el.querySelectorAll('.cor[data-c]').forEach(b=>b.onclick=()=>{const r=b.dataset.r,c=b.dataset.c,l=estado.cores[r];
+    if(l.includes(c)){ if(l.length>1) estado.cores[r]=l.filter(x=>x!==c); } else estado.cores[r]=[...l,c];
+    cores(); aplicaCores();});
+  el.querySelectorAll('input[type=color]').forEach(inp=>inp.onchange=()=>{const r=inp.dataset.r,c=inp.value.toLowerCase();
+    if(!estado.coresExtras[r].includes(c)) estado.coresExtras[r].push(c);
+    if(!estado.cores[r].includes(c)) estado.cores[r]=[...estado.cores[r],c];
+    cores(); aplicaCores();});
+}
+// nas prévias, quando um papel tem várias cores, elas vão se alternando
+let passoCor = 0;
+function aplicaCores(){
+  const s = document.documentElement.style, c = estado.cores;
+  const pega = (l)=>l[passoCor % l.length];
+  s.setProperty('--cor', pega(c.destaque)); s.setProperty('--cor2', pega(c.efeitos)); s.setProperty('--leg', pega(c.legenda));
+  estado.cor = c.destaque;
+}
+setInterval(()=>{passoCor++; aplicaCores();}, 1600);
+function resumo(){
+  const nomes = estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome);
+  document.getElementById('enviar').disabled = !nomes.length;
+  document.getElementById('resumo').innerHTML = nomes.length
+    ? `<b>${estado.formato}</b> · ${nomes.map((n,i)=>`<b>${i+1}.</b> ${n}`).join(' + ')} · ritmo ${txt('ritmo')} · fundo ${txt('fundo')}`
+    : 'Escolhe pelo menos um estilo.';
+}
+
+let info = {};
+async function carregar(){
+  try{
+    info = await (await fetch('/info')).json();
+    document.getElementById('vNome').textContent = info.nome || 'Sem vídeo (modo demonstração)';
+    if(info.video){
+      const v = document.getElementById('vid');
+      v.src = '/video';
+      v.onloadedmetadata = ()=>{
+        const d = v.duration, vert = v.videoHeight > v.videoWidth;
+        document.getElementById('vMeta').textContent = `${v.videoWidth}×${v.videoHeight} · ${Math.floor(d/60)}:${String(Math.round(d%60)).padStart(2,'0')} · ${info.tamanho||''}`;
+        if(!info.anterior){ estado.formato = vert ? '9:16' : '16:9'; abas(); grade(); resumo(); }
+        v.currentTime = Math.min(2, d/3);
+      };
+      v.onmouseenter=()=>v.play(); v.onmouseleave=()=>v.pause();
+    } else document.getElementById('vid').style.display='none';
+    if(info.anterior){ const an=info.anterior, aj={};
+      for(const [k,v] of Object.entries(an.ajustes||{})) aj[k]=Array.isArray(v)?v:[v];
+      Object.assign(estado, {formato:an.formato||estado.formato, estilos:an.estilos||[], ajustes:{...estado.ajustes,...aj}});
+      if(an.cores) estado.cores = {...estado.cores, ...an.cores};
+      else if(an.cor) estado.cores.destaque = Array.isArray(an.cor)?an.cor:[an.cor];
+      if(an.coresExtras) estado.coresExtras = {...estado.coresExtras, ...an.coresExtras};
+      document.getElementById('obs').value = info.anterior.observacoes||''; }
+  }catch(e){ document.getElementById('vNome').textContent='Modo demonstração'; document.getElementById('vid').style.display='none'; }
+  abas(); grade(); ajustes(); cores(); aplicaCores(); resumo();
+}
+document.getElementById('enviar').onclick = async ()=>{
+  const corpo = {...estado, observacoes:document.getElementById('obs').value.trim(),
+    estilosNomes: estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome), quando:new Date().toISOString()};
+  window.__escolha = corpo;
+  try{
+    const r = await fetch('/escolha',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)});
+    if(!r.ok) throw 0;
+    document.getElementById('feito').classList.add('on');
+  }catch(e){ document.getElementById('erro').textContent='Não consegui enviar. Fala "pronto" no chat que eu leio daqui.'; }
+};
+carregar();
+</script>
+</body>
+</html>

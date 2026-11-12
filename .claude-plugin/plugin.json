@@ -1,0 +1,9 @@
+{
+  "name": "editar",
+  "description": "/editar: manda um vídeo, escolhe o estilo de edição Motion SaaS numa página com prévias animadas (tela dividida, ilustrativa, legenda cinética, holograma, PiP, review de software...) e o Claude edita o vídeo em código com HyperFrames.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Augusto Ramos"
+  },
+  "license": "MIT"
+}
