@@ -28,12 +28,20 @@ Na primeira vez, o próprio Claude confere o que falta e te mostra o comando pra
 
 ## Instalar
 
-### Jeito 1: plugin (recomendado, recebe atualizações)
+### Jeito mais fácil: pedir pro Claude instalar
+
+1. Clica no botão verde **Code** → **Download ZIP** (ou usa o `skill-editar.zip` que te mandaram).
+2. Abre o **Claude Code** (o app do Claude na aba Code, ou `claude` no terminal). O chat comum do claude.ai não instala nada no teu computador.
+3. Manda o zip (ou o caminho dele) e escreve: **"instala essa skill"**.
+
+O Claude lê o `INSTALAR.md`, descompacta, copia a skill, instala a transcrição e confere o que mais falta (pedindo tua permissão antes de instalar qualquer programa). No fim é só abrir uma conversa nova e mandar `/editar` com o vídeo.
+
+### Jeito 2: plugin (recebe atualizações)
 
 No terminal:
 
 ```bash
-claude plugin marketplace add <usuario-do-github>/skill-editar
+claude plugin marketplace add techwordbr/skill-editar
 ```
 
 ```bash
@@ -52,7 +60,7 @@ claude plugin install hyperframes@hyperframes
 
 Depois é só abrir o Claude Code e mandar `/editar` com o vídeo.
 
-### Jeito 2: copiar a pasta
+### Jeito 3: copiar a pasta na mão
 
 Copia a pasta `skills/editar` para:
 
