@@ -5,20 +5,26 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const pasta = path.dirname(fileURLToPath(import.meta.url));
-const video = process.argv[2] && fs.existsSync(process.argv[2]) ? path.resolve(process.argv[2]) : null;
+// argumento: um vídeo/áudio, OU uma pasta de projeto (modo "Criar com IA", sem arquivo)
+const arg = process.argv[2] && fs.existsSync(process.argv[2]) ? path.resolve(process.argv[2]) : null;
+const projeto = arg && fs.statSync(arg).isDirectory() ? arg : null;
+const video = arg && !projeto ? arg : null;
 let porta = Number(process.argv[3]) || 4791;
 const saida = video
   ? path.join(path.dirname(video), path.parse(video).name + '.edicao.json')
-  : path.join(pasta, 'ultima-escolha.json');
+  : projeto ? path.join(projeto, 'escolha.edicao.json') : path.join(pasta, 'ultima-escolha.json');
+// amostras de voz para ouvir na página (Kokoro / Chatterbox), se existirem
+const pastaVozes = path.join(os.homedir(), '.editar-motion', 'voz', 'amostras');
 
 const tipos = { '.mp4': 'video/mp4', '.mov': 'video/quicktime', '.webm': 'video/webm', '.mkv': 'video/x-matroska', '.m4v': 'video/mp4',
   '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.m4a': 'audio/mp4', '.aac': 'audio/aac', '.ogg': 'audio/ogg', '.opus': 'audio/ogg', '.flac': 'audio/flac' };
 const pastaRefs = video
   ? path.join(path.dirname(video), path.parse(video).name + '-referencias')
-  : path.join(pasta, 'referencias-enviadas');
+  : projeto ? path.join(projeto, 'referencias') : path.join(pasta, 'referencias-enviadas');
 const midia = video &&tipos[path.extname(video).toLowerCase()]?.startsWith('audio') ? 'audio' : 'video';
 const mb = (b) => (b / 1048576).toFixed(1) + ' MB';
 
@@ -39,7 +45,7 @@ const srv = http.createServer((req, res) => {
     try { anterior = JSON.parse(fs.readFileSync(saida, 'utf8')); } catch {}
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({
-      video: !!video, midia, nome: video ? path.basename(video) : null, caminho: video,
+      video: !!video, midia: projeto ? 'nenhuma' : midia, projeto, nome: video ? path.basename(video) : projeto ? path.basename(projeto) : null, caminho: video,
       tamanho: video ? mb(fs.statSync(video).size) : null, anterior,
     }));
   }
@@ -79,20 +85,36 @@ const srv = http.createServer((req, res) => {
     req.on('data', (c) => { tam += c.length; if (tam > 25 * 1048576) { res.writeHead(413); res.end('grande demais'); req.destroy(); } else partes.push(c); });
     req.on('end', () => {
       if (res.writableEnded) return;
-      fs.mkdirSync(pastaRefs, { recursive: true });
-      const base = path.parse(url.searchParams.get('nome')).name.replace(/[^\w\-]+/g, '-').slice(0, 40) || 'print';
-      const arq = path.join(pastaRefs, `${Date.now().toString(36)}-${base}${ext}`);
+      const grupo = (url.searchParams.get('grupo') || 'programa').replace(/[^a-z]/g, '') || 'programa';
+      const dest = path.join(pastaRefs, grupo);
+      fs.mkdirSync(dest, { recursive: true });
+      const base = path.parse(url.searchParams.get('nome')).name.replace(/[^\w\-]+/g, '-').slice(0, 40) || 'imagem';
+      const arq = path.join(dest, `${Date.now().toString(36)}-${base}${ext}`);
       fs.writeFileSync(arq, Buffer.concat(partes));
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ caminho: arq, url: '/ref?f=' + encodeURIComponent(path.basename(arq)) }));
+      res.end(JSON.stringify({ caminho: arq, url: '/ref?g=' + grupo + '&f=' + encodeURIComponent(path.basename(arq)) }));
     });
     return;
   }
   if (url.pathname === '/ref') {
-    const alvo = path.join(pastaRefs, path.basename(url.searchParams.get('f') || ''));
-    if (!fs.existsSync(alvo)) { res.writeHead(404); return res.end(); }
+    const g = (url.searchParams.get('g') || '').replace(/[^a-z]/g, '');
+    let alvo = path.join(pastaRefs, g, path.basename(url.searchParams.get('f') || ''));
+    if (!fs.existsSync(alvo)) alvo = path.join(pastaRefs, path.basename(url.searchParams.get('f') || '')); // versão antiga
+    if (!fs.existsSync(alvo) || fs.statSync(alvo).isDirectory()) { res.writeHead(404); return res.end(); }
     const t = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif' }[path.extname(alvo).toLowerCase()] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': t });
+    return fs.createReadStream(alvo).pipe(res);
+  }
+  if (url.pathname === '/vozes') {
+    let lista = [];
+    try { lista = fs.readdirSync(pastaVozes).filter((f) => /\.(wav|mp3)$/i.test(f)); } catch {}
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(lista));
+  }
+  if (url.pathname === '/voz') {
+    const alvo = path.join(pastaVozes, path.basename(url.searchParams.get('f') || ''));
+    if (!fs.existsSync(alvo)) { res.writeHead(404); return res.end(); }
+    res.writeHead(200, { 'Content-Type': alvo.endsWith('.mp3') ? 'audio/mpeg' : 'audio/wav' });
     return fs.createReadStream(alvo).pipe(res);
   }
   if (url.pathname === '/escolha' && req.method === 'POST') {

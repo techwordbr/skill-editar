@@ -8,6 +8,8 @@ Manda um vídeo, escolhe numa página **como** ele vai ser editado, e o Claude e
 
 Também funciona **só com o áudio** de uma narração (`/editar C:\Audios\narracao.mp3`): aí o vídeo sai 100% animado.
 
+E **sem vídeo nenhum**, só com a ideia (`/editar vídeo de 30 s vendendo meu sérum`): abre a aba **Criar com IA**. Tu manda a foto do produto e do influenciador (ou pede pra gerar a pessoa), escolhe as cenas (ganchos virais como mão na câmera, levantando da cadeira, vlog; produto em POV, olhando pra câmera, review com narração; chamada final) e o narrador. O Claude escreve o roteiro e gera tudo no **Google Flow** pelo navegador, com a tua conta (Nano Banana pras imagens, Veo pros vídeos com fala). Narração grátis no teu PC com **Kokoro** ou com **a tua voz clonada** (Chatterbox).
+
 Abre uma página (azul, estilo Liquid Glass) com prévias animadas de cada estilo:
 
 - **UI viva (novo):** o programa que tu cita é recriado em código como se fosse gravação de tela, mas vivo. A câmera passeia em 3D pelas funções, um cursor 3D clica e a interface se monta enquanto tu fala.

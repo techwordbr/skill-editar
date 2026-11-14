@@ -8,7 +8,7 @@ description: Atalho de edição de vídeo no estilo Motion SaaS. Use quando a pe
 A pessoa NÃO quer escrever prompt de edição toda vez. O fluxo é: `/editar` + vídeo → tu abre a página → ela escolhe → tu edita.
 Responder sempre no idioma da pessoa.
 
-Os arquivos desta skill (pagina.html, servidor.mjs, preparar.mjs, transcrever.mjs, estilos.md, referencias.md, fontes.json) estão na **pasta desta skill**: o "Base directory" mostrado quando a skill carrega. Chamada abaixo de `<SKILL>`.
+Os arquivos desta skill (pagina.html, servidor.mjs, preparar.mjs, transcrever.mjs, estilos.md, referencias.md, fontes.json, ia-cenas.md, voz/) estão na **pasta desta skill**: o "Base directory" mostrado quando a skill carrega. Chamada abaixo de `<SKILL>`.
 
 ## 0. Primeira vez (ou se algo falhar)
 Rodar `node "<SKILL>/preparar.mjs"` e ler o JSON:
@@ -18,7 +18,7 @@ Rodar `node "<SKILL>/preparar.mjs"` e ler o JSON:
 Isso não precisa repetir a cada vídeo: só se o relatório anterior não estiver `tudoOk` ou algo der erro.
 
 ## 1. Achar o vídeo (ou áudio)
-Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Vídeos, Downloads e Área de Trabalho. Pode ser **só áudio** (mp3, wav, m4a, aac, ogg, opus, flac): é uma narração para animar inteira; o servidor e a página aceitam igual (a página mostra só os estilos que não precisam da pessoa na tela). Sem arquivo: perguntar qual é (uma linha) e parar.
+Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Vídeos, Downloads e Área de Trabalho. Pode ser **só áudio** (mp3, wav, m4a, aac, ogg, opus, flac): é uma narração para animar inteira; o servidor e a página aceitam igual (a página mostra só os estilos que não precisam da pessoa na tela). **Sem arquivo, só um prompt/roteiro** ("/editar faz um vídeo do produto X", "cria um vídeo com IA") = modo **Criar com IA**: criar a pasta `<Vídeos da pessoa>/criacoes-ia/<AAAA-MM-DD>-<nome-curto>/`, salvar o pedido em `pedido.txt` e abrir o servidor passando **a pasta** no lugar do vídeo (a página abre na aba "Criar com IA": produto, influenciador, cenas, narrador). Depois seguir **[ia-cenas.md](ia-cenas.md)**. Sem arquivo e sem pedido: perguntar o que é (uma linha) e parar.
 
 ## 2. Abrir a página de escolha (sem perguntar nada antes)
 1. Rodar **em segundo plano** (`run_in_background: true`): `node "<SKILL>/servidor.mjs" "<caminho do vídeo>"`
@@ -28,6 +28,7 @@ Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Víde
 5. Reabrindo pro mesmo vídeo, a página já vem com a escolha anterior.
 
 ## 3. Ler a escolha
+`modo` = "ia" → a escolha traz `ia` {texto, roteiroModo, duracao, produto, influenciador, cenario, cenas, voz}: seguir o **[ia-cenas.md](ia-cenas.md)** (roteiro → Nano Banana → Veo no Google Flow pelo navegador, com a conta da pessoa → edição final). Os campos abaixo valem para a edição final.
 Campos: `midia` ("video" | "audio"), `formato` ("9:16" | "16:9" | "Os dois"), `estilos` (ids em ordem = prioridade do mix), `ajustes` {fundo, ritmo, legenda, cortes, sfx, musica, elementos, fontes, logos, motor, gancho} (cada um é uma lista), `cores` {destaque, efeitos, legenda} (listas de hex), `fontesDetalhe` {bold, serifa, escrita, texto} (famílias escolhidas, com arquivo local ou nome no Google Fonts), `observacoes` (texto livre, **prioridade máxima**).
 `programa` {nome, links, comoFunciona, imagens:[{nome, caminho}]}: o programa que aparece no vídeo, quando a pessoa quer que tu conheças um que não conheces (ver "Estudar o programa").
 Se a pessoa mandar uma pasta de fontes dela, pôr o caminho em `"pasta"` no `<SKILL>/fontes.json` e acrescentar as famílias no papel certo (`arquivo` relativo à pasta). Pular fontes DEMO / personal use.

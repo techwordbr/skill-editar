@@ -32,7 +32,7 @@ try { const f = JSON.parse(fs.readFileSync(path.join(destino, 'fontes.json'), 'u
 fs.mkdirSync(destino, { recursive: true });
 for (const arq of fs.readdirSync(origem)) {
   if (arq === 'fontes.json' && fontesAntigo) continue;
-  fs.copyFileSync(path.join(origem, arq), path.join(destino, arq));
+  fs.cpSync(path.join(origem, arq), path.join(destino, arq), { recursive: true });
 }
 if (prefs) {
   const novo = fs.readFileSync(estilosAntigo, 'utf8');

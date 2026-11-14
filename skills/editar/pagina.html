@@ -232,6 +232,66 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--suav
 .mini-img .x{position:absolute;top:3px;right:3px;background:#000a;border-radius:50%;width:20px;height:20px;color:#fff;font-size:12px}
 .mini-img.subindo{opacity:.5}
 
+/* ---------- criar com IA ---------- */
+.modo-abas .aba{font-size:15px;padding:11px 18px}
+.ia-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.ia-grade .palco{height:250px}
+.ia-grade .tela.v{height:230px}
+.subt{font:700 12px Inter;letter-spacing:.12em;text-transform:uppercase;color:#7cc4ff;margin:18px 0 10px}
+.ceu{position:absolute;inset:0;background:linear-gradient(180deg,#2b3a55,#1a2233 60%,#2a2f3a)}
+.ceu.claro{background:linear-gradient(180deg,#f3e9dc,#e6d6c3)}
+.ceu::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:#00000030}
+.ps{position:absolute;left:50%;bottom:0;width:80%;aspect-ratio:1;transform:translateX(-50%)}
+.ps svg{width:100%;height:100%;display:block}
+.prod{position:absolute;width:22%;aspect-ratio:3/4;border-radius:10%;background:linear-gradient(160deg,#fff,#dfe6f2);box-shadow:0 8px 16px -6px #000a,inset 0 0 0 1px #ffffff80;display:grid;place-items:center}
+.prod::before{content:"";width:62%;height:26%;border-radius:4px;background:linear-gradient(90deg,var(--cor),var(--cor2))}
+.mao{position:absolute;width:16%;aspect-ratio:.8;border-radius:45% 45% 40% 40%;background:linear-gradient(#f1d3bd,#c99a7c)}
+.palma{position:absolute;left:20%;top:18%;width:60%;aspect-ratio:.85;border-radius:46% 46% 40% 40%;background:radial-gradient(60% 60% at 50% 45%,#f4d8c3,#c99a7c);filter:blur(2px);animation:palma 4s cubic-bezier(.6,0,.2,1) infinite;z-index:3}
+@keyframes palma{0%,12%{transform:scale(2.6) translateY(10%);opacity:1}45%,100%{transform:scale(.4) translate(160%,90%);opacity:0}}
+.revela{animation:revela 4s ease infinite}
+@keyframes revela{0%,12%{filter:blur(3px)}40%,100%{filter:blur(0)}}
+.aproxima{animation:aproxima 4s cubic-bezier(.5,0,.2,1) infinite}
+@keyframes aproxima{0%{transform:translateX(-50%) scale(.45) translateY(0)}15%{transform:translateX(-50%) scale(.6) translateY(-2%)}30%{transform:translateX(-50%) scale(.8) translateY(0)}45%{transform:translateX(-50%) scale(1.05) translateY(-2%)}60%,100%{transform:translateX(-50%) scale(1.4) translateY(4%)}}
+.entra{animation:entra 4s cubic-bezier(.5,0,.2,1) infinite}
+@keyframes entra{0%,10%{transform:translateX(-200%)}45%,100%{transform:translateX(-50%)}}
+.levanta{animation:levanta 4s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes levanta{0%,18%{transform:translateX(-50%) translateY(34%) rotate(-4deg)}50%,100%{transform:translateX(-50%) translateY(0) rotate(0)}}
+.cadeira{position:absolute;left:24%;bottom:0;width:52%;height:30%;border-radius:10px 10px 0 0;background:linear-gradient(#4b3a2f,#2e241d);animation:cadeira 4s ease infinite}
+@keyframes cadeira{0%,40%{opacity:1}60%,100%{opacity:.35}}
+.rua{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#3d4a63 0 18%,#2c3649 18% 30%);animation:rua 1.6s linear infinite}
+@keyframes rua{to{background-position:-100px 0}}
+.vlog{animation:vlog .5s ease-in-out infinite alternate}
+@keyframes vlog{0%{transform:translateX(-50%) rotate(-1.5deg) translateY(0)}100%{transform:translateX(-49%) rotate(1.5deg) translateY(-2%)}}
+.braco{position:absolute;right:-6%;bottom:18%;width:45%;height:9%;border-radius:999px;background:linear-gradient(90deg,#c99a7c,#f1d3bd);transform:rotate(-28deg);z-index:2}
+.pov .prod{left:39%;top:40%;width:26%;animation:povGira 4s ease-in-out infinite}
+@keyframes povGira{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(10deg) scale(1.12)}}
+.pov .mao.e{left:22%;top:55%;transform:rotate(25deg)}.pov .mao.d{right:22%;top:55%;transform:rotate(-25deg)}
+.olhando .prod{left:58%;top:40%;animation:popProd 4s cubic-bezier(.3,1.5,.5,1) infinite}
+@keyframes popProd{0%,10%{transform:scale(0) rotate(-20deg)}22%,100%{transform:scale(1) rotate(-6deg)}}
+.fala{position:absolute;left:14%;top:14%;display:flex;gap:4px}
+.fala i{width:6px;border-radius:3px;background:#fff;animation:fala .5s ease-in-out infinite alternate}
+.fala i:nth-child(2){animation-delay:.15s}.fala i:nth-child(3){animation-delay:.3s}
+@keyframes fala{from{height:6px}to{height:20px}}
+.mesa{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#b08968,#7f5539)}
+.frente .prod{left:62%;bottom:18%;width:20%}
+.frente .ps{bottom:18%;width:72%}
+.review .prod{left:34%;top:30%;width:32%;animation:orbita 5s ease-in-out infinite}
+@keyframes orbita{0%,100%{transform:perspective(300px) rotateY(-25deg) scale(1)}50%{transform:perspective(300px) rotateY(25deg) scale(1.15)}}
+.onda{position:absolute;left:12%;right:12%;bottom:8%;height:12%;display:flex;align-items:center;gap:3%}
+.onda i{flex:1;border-radius:3px;background:var(--cor2);animation:fala .6s ease-in-out infinite alternate}
+.onda i:nth-child(2n){animation-delay:.2s}.onda i:nth-child(3n){animation-delay:.35s}
+.seta{position:absolute;left:44%;bottom:10%;width:12%;aspect-ratio:1;background:var(--cor2);clip-path:polygon(35% 0,65% 0,65% 55%,100% 55%,50% 100%,0 55%,35% 55%);animation:setaDesce 1s ease-in-out infinite alternate;z-index:3}
+@keyframes setaDesce{to{transform:translateY(25%)}}
+.ia2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.ia2{grid-template-columns:1fr}}
+.voz-lista{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.voz-item{display:flex;align-items:center;gap:10px;border:1px solid var(--linha);border-radius:12px;padding:6px 10px;background:#ffffff08;cursor:pointer}
+.voz-item.on{border-color:rgba(180,225,255,.7);background:rgba(10,132,255,.2)}
+.voz-item button{border:0;border-radius:50%;width:28px;height:28px;background:linear-gradient(180deg,#5ac8fa,#0a84ff);color:#fff;cursor:pointer}
+.so-ia,.so-editar{display:none}
+body.m-ia .so-ia{display:block}
+body.m-editar .so-editar{display:block}
+
 /* ---------- fontes ---------- */
 .combo{display:block;text-align:left;border:1px solid var(--linha);background:var(--bg2);color:var(--texto);border-radius:18px;padding:12px 14px;cursor:pointer;box-shadow:var(--brilho);transition:.25s;min-width:0}
 .combo:hover{transform:translateY(-2px);border-color:rgba(170,215,255,.4)}
@@ -299,9 +359,54 @@ textarea:focus{outline:2px solid var(--cor);border-color:transparent}
     </div>
   </header>
 
+  <div class="abas modo-abas" id="abasModo">
+    <button class="aba" data-m="editar">🎬 Editar meu vídeo ou áudio</button>
+    <button class="aba" data-m="ia">✨ Criar com IA (Google Flow)</button>
+  </div>
+
   <h2>Formato</h2>
   <div class="abas" id="abasFormato"></div>
 
+  <div class="so-ia" id="secIA">
+    <h2>Ideia ou roteiro</h2>
+    <div class="grupo">
+      <div class="chips" id="iaRotModo"></div>
+      <textarea id="iaTexto" style="margin-top:10px;min-height:90px" placeholder="Ex.: vídeo de 30 s vendendo o sérum de vitamina C, falando pra quem tem mancha no rosto, tom animado e próximo…"></textarea>
+      <div class="dica" style="margin-top:10px">Duração</div><div class="chips" id="iaDur"></div>
+    </div>
+
+    <h2>Produto e influenciador</h2>
+    <div class="ia2">
+      <div class="grupo">
+        <h4>📦 Produto</h4><div class="dica">Fotos nítidas, de preferência com o rótulo de frente. Quanto mais ângulos, mais fiel fica.</div>
+        <input class="campo" id="iaProdNome" placeholder="Nome do produto">
+        <input class="campo" id="iaProdDesc" style="margin-top:8px" placeholder="O que ele faz / benefício principal (opcional)">
+        <label class="drop" style="margin-top:10px"><input type="file" data-grupo="produto" accept="image/png,image/jpeg,image/webp" multiple hidden><span>📷 <b>Fotos do produto</b>: arrasta, clica ou Ctrl+V</span></label>
+        <div class="miniaturas" id="miniProduto"></div>
+      </div>
+      <div class="grupo">
+        <h4>🙋 Influenciador</h4><div class="dica">Manda a foto de quem vai aparecer, ou eu gero a pessoa no Nano Banana a partir da descrição.</div>
+        <div class="chips" id="iaInflModo"></div>
+        <label class="drop" style="margin-top:10px" id="dropInfl"><input type="file" data-grupo="influenciador" accept="image/png,image/jpeg,image/webp" multiple hidden><span>🖼️ <b>Foto do influenciador</b>: arrasta, clica ou Ctrl+V</span></label>
+        <div class="miniaturas" id="miniInfluenciador"></div>
+        <textarea id="iaInflDesc" style="margin-top:10px;min-height:60px" placeholder="Como é a pessoa: ex. mulher, 25 anos, cabelo cacheado castanho, blusa bege, jeito simpático"></textarea>
+        <input class="campo" id="iaCenario" style="margin-top:8px" placeholder="Cenário: ex. banheiro claro com plantas, quarto aconchegante, rua de dia">
+      </div>
+    </div>
+
+    <h2>Cenas do vídeo (na ordem que tu clicar)</h2>
+    <div class="dica" style="margin:-6px 0 6px;color:var(--suave);font-size:13px">Cada cena vira 1 imagem no Nano Banana e 1 clipe de ~8 s no Veo, já com a fala.</div>
+    <div id="gradeIA"></div>
+
+    <h2>Narrador</h2>
+    <div class="grupo">
+      <div class="dica">Nas cenas em que a pessoa fala, a voz é a do próprio Veo. Aqui tu escolhe quem narra por cima nas cenas de review e POV.</div>
+      <div class="chips" id="iaVozMotor"></div>
+      <div class="voz-lista" id="iaVozes"></div>
+    </div>
+  </div>
+
+  <div class="so-editar">
   <h2>Estilo de edição</h2>
   <div class="aviso" id="avisoAudio" style="display:none">🎙️ Só áudio: o vídeo vai ser 100% animação, então aparecem só os estilos que não precisam de ti na tela.</div>
   <div class="grade" id="grade"></div>
@@ -323,6 +428,7 @@ textarea:focus{outline:2px solid var(--cor);border-color:transparent}
         <div class="miniaturas" id="miniaturas"></div>
       </div>
     </div>
+  </div>
   </div>
 
   <h2>Cores</h2>
@@ -552,6 +658,15 @@ function aplicaCores(){
 }
 setInterval(()=>{passoCor++; aplicaCores();}, 1600);
 function resumo(){
+  if(estado.modo==='ia' && estado.ia){
+    const ia = estado.ia, n = ia.cenas.length;
+    const falta = !n ? 'escolhe as cenas' : (!ia.produto.imagens.length && !ia.produto.nome.trim()) ? 'manda o produto (foto ou nome)'
+      : (ia.influenciador.modo==='Tenho a foto' && !ia.influenciador.imagens.length) ? 'manda a foto do influenciador (ou escolhe gerar)' : '';
+    document.getElementById('enviar').disabled = !!falta;
+    document.getElementById('resumo').innerHTML = falta ? `Falta: ${falta}.`
+      : `<b>${estado.formato}</b> · ${n} cena${n>1?'s':''} (${ia.cenas.map(id=>CENAS_IA.find(c=>c.id===id).nome).join(' → ')}) · ${n} imagens + ${n} vídeos no Flow · ${ia.duracao}`;
+    return;
+  }
   const nomes = estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome);
   document.getElementById('enviar').disabled = !nomes.length;
   document.getElementById('resumo').innerHTML = nomes.length
@@ -656,13 +771,118 @@ function ligaPrograma(){
   d.ondrop = (e)=>{ e.preventDefault(); d.classList.remove('sobre'); enviaImagens([...e.dataTransfer.files]); };
   document.addEventListener('paste', (e)=>{
     const imgs = [...(e.clipboardData?.items||[])].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile()).filter(Boolean);
-    if(imgs.length){ e.preventDefault(); enviaImagens(imgs); }
+    if(!imgs.length) return;
+    e.preventDefault();
+    if(estado.modo==='ia'){ const g = grupoAtivo || (estado.ia.produto.imagens.length && estado.ia.influenciador.modo==='Tenho a foto' && !estado.ia.influenciador.imagens.length ? 'influenciador' : 'produto');
+      subir(imgs, g, estado.ia[g].imagens, ()=>miniIA(g)); }
+    else enviaImagens(imgs);
   });
+}
+
+/* ---------- criar com IA ---------- */
+const PS = (cls='', extra='') => `<div class="ps ${cls}">${PESSOA}</div>${extra}`;
+const CENAS_IA = [
+  {g:'Gancho', id:'gancho-mao', nome:'Mão na câmera', desc:'A mão sai da frente da lente e revela a pessoa já falando.',
+   html:`<div class="ceu"></div><div class="l revela" style="inset:0">${PS()}</div><div class="palma"></div>`},
+  {g:'Gancho', id:'gancho-aproxima', nome:'Se aproximando', desc:'Vem andando rápido até a câmera e solta a frase.',
+   html:`<div class="ceu"></div>${PS('aproxima')}`},
+  {g:'Gancho', id:'gancho-entra', nome:'Entrando na frente', desc:'Entra pela lateral e olha direto pra lente.',
+   html:`<div class="ceu"></div>${PS('entra')}`},
+  {g:'Gancho', id:'gancho-levanta', nome:'Levantando da cadeira', desc:'Estava sentado, levanta e olha pra câmera surpreso.',
+   html:`<div class="ceu claro"></div><div class="cadeira"></div>${PS('levanta')}`},
+  {g:'Gancho', id:'gancho-vlog', nome:'Puxando a câmera (vlog)', desc:'Selfie andando, puxando a câmera junto, tremidinha natural.',
+   html:`<div class="rua"></div>${PS('vlog')}<div class="braco"></div>`},
+  {g:'Produto', id:'produto-pov', nome:'POV', desc:'Visão em primeira pessoa: as mãos mostram e abrem o produto.',
+   html:`<div class="ceu claro"></div><div class="l pov" style="inset:0"><div class="mao e"></div><div class="mao d"></div><div class="prod"></div></div>`},
+  {g:'Produto', id:'produto-olhando', nome:'Olhando pra câmera', desc:'Segura o produto do lado do rosto e fala com quem assiste.',
+   html:`<div class="ceu"></div><div class="l olhando" style="inset:0">${PS()}<div class="prod"></div></div><div class="fala"><i></i><i></i><i></i></div>`},
+  {g:'Produto', id:'produto-frente', nome:'De frente falando', desc:'Estilo UGC: conversa natural de frente, produto na mão ou na mesa.',
+   html:`<div class="ceu claro"></div><div class="l frente" style="inset:0">${PS()}<div class="mesa"></div><div class="prod"></div></div><div class="fala"><i></i><i></i><i></i></div>`},
+  {g:'Produto', id:'review', nome:'Review (narração)', desc:'Ninguém fala na cena: closes bonitos do produto e narração por cima.',
+   html:`<div class="ceu claro"></div><div class="l review" style="inset:0"><div class="mesa"></div><div class="prod"></div></div><div class="onda"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>`},
+  {g:'Final', id:'cta', nome:'Chamada final', desc:'Sorri com o produto e aponta pro link.',
+   html:`<div class="ceu"></div>${PS()}<div class="prod" style="left:60%;top:46%"></div><div class="seta"></div>`},
+];
+estado.modo = 'editar';
+estado.ia = {roteiroModo:'Eu escrevo o roteiro', texto:'', duracao:'30 s', produto:{nome:'', descricao:'', imagens:[]},
+  influenciador:{modo:'Tenho a foto', imagens:[], descricao:''}, cenario:'', cenas:[], voz:{motor:'Voz do Flow (Veo)', narrador:''}};
+let grupoAtivo = null; // pra onde vai o Ctrl+V
+function chipsUm(el, ops, atual, cb){
+  el.innerHTML = ops.map(o=>`<button class="chip ${o===atual?'on':''}" data-v="${o}">${o}</button>`).join('');
+  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>cb(b.dataset.v));
+}
+function modo(m){
+  estado.modo = m;
+  document.body.classList.toggle('m-ia', m==='ia'); document.body.classList.toggle('m-editar', m!=='ia');
+  document.querySelectorAll('#abasModo .aba').forEach(b=>b.classList.toggle('on', b.dataset.m===m));
+  document.getElementById('enviar').textContent = m==='ia' ? 'Enviar pro Google Flow →' : 'Editar assim →';
+  document.querySelector('h1 span').textContent = m==='ia' ? 'criado?' : 'editado?';
+  resumo();
+}
+function miniIA(grupo){
+  const lista = estado.ia[grupo].imagens, el = document.getElementById(grupo==='produto'?'miniProduto':'miniInfluenciador');
+  el.innerHTML = lista.map((m,i)=>`<div class="mini-img ${m.subindo?'subindo':''}" title="${esc(m.nome)}"><img src="${m.url}" alt=""><button class="x" data-i="${i}">✕</button></div>`).join('');
+  el.querySelectorAll('.x').forEach(b=>b.onclick=()=>{lista.splice(+b.dataset.i,1); miniIA(grupo); resumo();});
+}
+async function subir(arquivos, grupo, lista, redesenha){
+  for(const f of arquivos){
+    if(!/^image\/(png|jpe?g|webp|gif)$/.test(f.type)) continue;
+    const nome = f.name && f.name!=='image.png' ? f.name : `${grupo}-${lista.length+1}.png`;
+    const item = {nome, url:URL.createObjectURL(f), subindo:true}; lista.push(item); redesenha();
+    try{ const r = await fetch(`/upload?grupo=${grupo}&nome=${encodeURIComponent(nome)}`, {method:'POST', body:f}); if(!r.ok) throw 0;
+      const d = await r.json(); Object.assign(item, {caminho:d.caminho, url:d.url, subindo:false}); }
+    catch(e){ lista.splice(lista.indexOf(item),1); document.getElementById('erro').textContent='Não consegui guardar '+nome+'.'; }
+    redesenha(); resumo();
+  }
+}
+function iaCenas(){
+  const el = document.getElementById('gradeIA'), c = estado.ia.cenas;
+  el.innerHTML = ['Gancho','Produto','Final'].map(g=>`<div class="subt">${g}</div><div class="ia-grade">${CENAS_IA.filter(x=>x.g===g).map(x=>{
+    const i = c.indexOf(x.id);
+    return `<div class="estilo ${i>=0?'on':''}" data-id="${x.id}"><div class="num">${i+1}</div><div class="palco"><div class="tela v">${x.html}</div></div><h3>${x.nome}</h3><p>${x.desc}</p></div>`;}).join('')}</div>`).join('');
+  el.querySelectorAll('.estilo').forEach(card=>card.onclick=()=>{const id=card.dataset.id, i=c.indexOf(id); if(i>=0) c.splice(i,1); else c.push(id); iaCenas(); resumo();});
+}
+let VOZES = [];
+function iaVoz(){
+  const v = estado.ia.voz;
+  chipsUm(document.getElementById('iaVozMotor'), ['Voz do Flow (Veo)','Kokoro (grátis)','Minha voz (Chatterbox)'], v.motor, (x)=>{v.motor=x; iaVoz();});
+  const filtro = v.motor.startsWith('Kokoro') ? /^kokoro/ : v.motor.startsWith('Minha') ? /^chatterbox/ : null;
+  const lista = filtro ? VOZES.filter(f=>filtro.test(f)) : [];
+  if(filtro && !lista.includes(v.narrador)) v.narrador = lista[0] || '';
+  document.getElementById('iaVozes').innerHTML = !filtro ? '<div class="dica">O Veo cria a voz junto com o vídeo. Na narração de review eu peço uma voz calma em português.</div>'
+    : lista.length ? lista.map(f=>`<div class="voz-item ${f===v.narrador?'on':''}" data-f="${f}"><button type="button" data-play="${f}" title="Ouvir">▶</button>${f.replace(/\.(wav|mp3)$/,'').replace(/^kokoro-|^chatterbox-/,'').replace(/_/g,' ')}</div>`).join('')
+    : '<div class="dica">Nenhuma amostra dessa voz ainda.</div>';
+  document.querySelectorAll('.voz-item').forEach(d=>d.onclick=(e)=>{ if(e.target.dataset.play){ new Audio('/voz?f='+encodeURIComponent(e.target.dataset.play)).play(); return; } v.narrador=d.dataset.f; iaVoz(); });
+}
+function ligaIA(){
+  document.querySelectorAll('#abasModo .aba').forEach(b=>b.onclick=()=>modo(b.dataset.m));
+  const ia = estado.ia;
+  const rot = ()=>chipsUm(document.getElementById('iaRotModo'), ['Eu escrevo o roteiro','Meu roteiro pronto'], ia.roteiroModo, (x)=>{ia.roteiroModo=x; rot();
+    document.getElementById('iaTexto').placeholder = x.startsWith('Meu') ? 'Cola o roteiro aqui. Pode separar por cena, uma fala por linha.' : 'Ex.: vídeo de 30 s vendendo o sérum de vitamina C, falando pra quem tem mancha no rosto, tom animado e próximo…';});
+  const dur = ()=>chipsUm(document.getElementById('iaDur'), ['15 s','30 s','45 s','60 s'], ia.duracao, (x)=>{ia.duracao=x; dur();});
+  const infl = ()=>{ chipsUm(document.getElementById('iaInflModo'), ['Tenho a foto','Gerar com Nano Banana'], ia.influenciador.modo, (x)=>{ia.influenciador.modo=x; infl();});
+    document.getElementById('dropInfl').style.display = ia.influenciador.modo==='Tenho a foto' ? '' : 'none'; };
+  rot(); dur(); infl();
+  const liga = (id, fn) => { const e=document.getElementById(id); e.value = fn(); e.oninput = ()=>{ fn(e.value); resumo(); }; };
+  liga('iaTexto', (v)=> v===undefined ? ia.texto : (ia.texto=v));
+  liga('iaProdNome', (v)=> v===undefined ? ia.produto.nome : (ia.produto.nome=v));
+  liga('iaProdDesc', (v)=> v===undefined ? ia.produto.descricao : (ia.produto.descricao=v));
+  liga('iaInflDesc', (v)=> v===undefined ? ia.influenciador.descricao : (ia.influenciador.descricao=v));
+  liga('iaCenario', (v)=> v===undefined ? ia.cenario : (ia.cenario=v));
+  document.querySelectorAll('#secIA .drop').forEach(d=>{
+    const inp = d.querySelector('input'), g = inp.dataset.grupo, lista = ia[g].imagens, rd = ()=>miniIA(g);
+    inp.onchange = (e)=>{ subir([...e.target.files], g, lista, rd); e.target.value=''; };
+    d.onmouseenter = ()=>grupoAtivo = g;
+    d.ondragover = (e)=>{ e.preventDefault(); d.classList.add('sobre'); }; d.ondragleave = ()=>d.classList.remove('sobre');
+    d.ondrop = (e)=>{ e.preventDefault(); d.classList.remove('sobre'); subir([...e.dataTransfer.files], g, lista, rd); };
+  });
+  miniIA('produto'); miniIA('influenciador'); iaCenas(); iaVoz();
 }
 
 let info = {};
 async function carregar(){
   ligaPrograma();
+  try{ VOZES = await (await fetch('/vozes')).json(); }catch(e){}
   try{ const fr = await (await fetch('/fontes')).json(); FONTES = {...FONTES, ...fr.familias}; }
   catch(e){ FONTES = FONTES_DEMO; }
   carregaFontes();
@@ -670,6 +890,7 @@ async function carregar(){
     info = await (await fetch('/info')).json();
     document.getElementById('vNome').textContent = info.nome || 'Sem vídeo (modo demonstração)';
     estado.midia = info.midia || 'video';
+    if(info.projeto){ estado.modo = 'ia'; document.getElementById('vNome').textContent = 'Projeto: ' + info.nome; document.getElementById('vMeta').textContent = 'Criação com IA, sem vídeo'; document.getElementById('vid').style.display='none'; const ic=document.getElementById('audIc'); ic.style.display='grid'; ic.textContent='✨'; }
     if(info.video && estado.midia==='audio'){
       document.getElementById('vid').style.display='none';
       const ic = document.getElementById('audIc'); ic.style.display='grid';
@@ -697,24 +918,33 @@ async function carregar(){
       if(an.coresExtras) estado.coresExtras = {...estado.coresExtras, ...an.coresExtras};
       if(an.fontes) for(const p of Object.keys(estado.fontes)) estado.fontes[p] = (an.fontes[p]||[]).filter(id=>achaF(p,id)).length ? an.fontes[p].filter(id=>achaF(p,id)) : estado.fontes[p];
       if(estado.midia==='audio') estado.estilos = estado.estilos.filter(id=>ESTILOS.find(e=>e.id===id)?.semPessoa);
-      if(an.programa) estado.programa = {nome:an.programa.nome||'', links:an.programa.links||[], comoFunciona:an.programa.comoFunciona||'',
+      if(an.ia){ const ia = an.ia, fixa = (l)=>(l||[]).map(m=>({...m, url:'/ref?g='+(m.caminho||'').split(/[\\/]/).slice(-2,-1)[0]+'&f='+encodeURIComponent((m.caminho||'').split(/[\\/]/).pop())}));
+        estado.ia = {...estado.ia, ...ia, produto:{...estado.ia.produto, ...ia.produto, imagens:fixa(ia.produto?.imagens)},
+          influenciador:{...estado.ia.influenciador, ...ia.influenciador, imagens:fixa(ia.influenciador?.imagens)}, voz:{...estado.ia.voz, ...ia.voz}, cenas:ia.cenas||[]}; }
+      if(an.modo && !info.projeto) estado.modo = an.modo;
+      if(an.programa) estado.programa ={nome:an.programa.nome||'', links:an.programa.links||[], comoFunciona:an.programa.comoFunciona||'',
         imagens:(an.programa.imagens||[]).map(m=>({...m, url:'/ref?f='+encodeURIComponent((m.caminho||'').split(/[\\/]/).pop())}))};
       document.getElementById('obs').value = info.anterior.observacoes||''; }
   }catch(e){ document.getElementById('vNome').textContent='Modo demonstração'; document.getElementById('vid').style.display='none'; }
-  abas(); grade(); ajustes(); cores(); fontes(); programa(); aplicaCores(); resumo();
+  abas(); grade(); ajustes(); cores(); fontes(); programa(); ligaIA(); aplicaCores(); modo(estado.modo);
 }
 document.getElementById('enviar').onclick = async ()=>{
   addLink(); // link digitado e não adicionado também vale
-  if(estado.programa.imagens.some(m=>m.subindo)){ document.getElementById('erro').textContent='Espera as imagens terminarem de subir.'; return; }
+  const iaImgs = [...estado.ia.produto.imagens, ...estado.ia.influenciador.imagens];
+  if([...estado.programa.imagens, ...iaImgs].some(m=>m.subindo)){ document.getElementById('erro').textContent='Espera as imagens terminarem de subir.'; return; }
   const pr = estado.programa;
   const corpo = {...estado, observacoes:document.getElementById('obs').value.trim(),
     programa: {nome:pr.nome.trim(), links:pr.links, comoFunciona:pr.comoFunciona.trim(), imagens:pr.imagens.map(m=>({nome:m.nome, caminho:m.caminho}))},
+    ia: estado.modo!=='ia' ? null : (()=>{ const ia = estado.ia, so = (l)=>l.map(m=>({nome:m.nome, caminho:m.caminho}));
+      return {...ia, texto:ia.texto.trim(), produto:{...ia.produto, imagens:so(ia.produto.imagens)}, influenciador:{...ia.influenciador, imagens:so(ia.influenciador.imagens)},
+        cenasNomes: ia.cenas.map(id=>CENAS_IA.find(c=>c.id===id).nome)}; })(),
     estilosNomes: estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome), quando:new Date().toISOString(),
     fontesDetalhe: Object.fromEntries(Object.entries(estado.fontes).map(([p,l])=>[p, l.map(id=>{const f=achaF(p,id)||{};return {nome:f.nome, arquivo:f.local?f.arquivo:null, google:f.google||null};})]))};
   window.__escolha = corpo;
   try{
     const r = await fetch('/escolha',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)});
     if(!r.ok) throw 0;
+    if(estado.modo==='ia') document.querySelector('#feito p').textContent = 'Pode voltar pro chat. Vou escrever o roteiro, abrir o Google Flow e gerar as cenas. Te mando as imagens antes dos vídeos.';
     document.getElementById('feito').classList.add('on');
   }catch(e){ document.getElementById('erro').textContent='Não consegui enviar. Fala "pronto" no chat que eu leio daqui.'; }
 };
