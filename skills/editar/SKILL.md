@@ -1,6 +1,6 @@
 ---
 name: editar
-description: Atalho de edição de vídeo no estilo Motion SaaS. Use quando a pessoa mandar /editar junto com um vídeo (caminho ou arquivo anexado), ou pedir "edita esse vídeo". Abre uma página local para escolher o estilo de edição (tela dividida, ilustrativa com cartão, legenda cinética, holograma, PiP, review de software etc.), cores e detalhes, espera a escolha e então edita o vídeo em código com HyperFrames.
+description: Atalho de edição de vídeo no estilo Motion SaaS. Use quando a pessoa mandar /editar junto com um vídeo ou só um áudio de narração (caminho ou arquivo anexado), ou pedir "edita esse vídeo" / "anima esse áudio". Abre uma página local para escolher o estilo de edição (UI viva, motion explicativo, tela dividida, ilustrativa com cartão, legenda cinética, holograma, PiP, review de software etc.), cores, fontes e detalhes, espera a escolha e então edita em código com HyperFrames.
 ---
 
 # /editar — escolher o estilo e editar
@@ -8,7 +8,7 @@ description: Atalho de edição de vídeo no estilo Motion SaaS. Use quando a pe
 A pessoa NÃO quer escrever prompt de edição toda vez. O fluxo é: `/editar` + vídeo → tu abre a página → ela escolhe → tu edita.
 Responder sempre no idioma da pessoa.
 
-Os arquivos desta skill (pagina.html, servidor.mjs, preparar.mjs, transcrever.mjs, estilos.md) estão na **pasta desta skill**: o "Base directory" mostrado quando a skill carrega. Chamada abaixo de `<SKILL>`.
+Os arquivos desta skill (pagina.html, servidor.mjs, preparar.mjs, transcrever.mjs, estilos.md, referencias.md, fontes.json) estão na **pasta desta skill**: o "Base directory" mostrado quando a skill carrega. Chamada abaixo de `<SKILL>`.
 
 ## 0. Primeira vez (ou se algo falhar)
 Rodar `node "<SKILL>/preparar.mjs"` e ler o JSON:
@@ -17,8 +17,8 @@ Rodar `node "<SKILL>/preparar.mjs"` e ler o JSON:
 - `pluginHyperframes` faltando → é recomendado (ensina o HyperFrames): `claude plugin marketplace add heygen-com/hyperframes` e `claude plugin install hyperframes@hyperframes` (precisa de git; pedir OK). Sem ele, dá pra seguir com `npx hyperframes` e a documentação em https://hyperframes.heygen.com.
 Isso não precisa repetir a cada vídeo: só se o relatório anterior não estiver `tudoOk` ou algo der erro.
 
-## 1. Achar o vídeo
-Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Vídeos, Downloads e Área de Trabalho. Sem vídeo: perguntar qual é (uma linha) e parar.
+## 1. Achar o vídeo (ou áudio)
+Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Vídeos, Downloads e Área de Trabalho. Pode ser **só áudio** (mp3, wav, m4a, aac, ogg, opus, flac): é uma narração para animar inteira; o servidor e a página aceitam igual (a página mostra só os estilos que não precisam da pessoa na tela). Sem arquivo: perguntar qual é (uma linha) e parar.
 
 ## 2. Abrir a página de escolha (sem perguntar nada antes)
 1. Rodar **em segundo plano** (`run_in_background: true`): `node "<SKILL>/servidor.mjs" "<caminho do vídeo>"`
@@ -28,12 +28,13 @@ Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Víde
 5. Reabrindo pro mesmo vídeo, a página já vem com a escolha anterior.
 
 ## 3. Ler a escolha
-Campos: `formato` ("9:16" | "16:9" | "Os dois"), `estilos` (ids em ordem = prioridade do mix), `ajustes` {fundo, ritmo, legenda, cortes, sfx, musica, logos, motor, gancho} (cada um é uma lista), `cores` {destaque, efeitos, legenda} (listas de hex), `observacoes` (texto livre, **prioridade máxima**).
+Campos: `midia` ("video" | "audio"), `formato` ("9:16" | "16:9" | "Os dois"), `estilos` (ids em ordem = prioridade do mix), `ajustes` {fundo, ritmo, legenda, cortes, sfx, musica, elementos, fontes, logos, motor, gancho} (cada um é uma lista), `cores` {destaque, efeitos, legenda} (listas de hex), `fontesDetalhe` {bold, serifa, escrita, texto} (famílias escolhidas, com arquivo local ou nome no Google Fonts), `observacoes` (texto livre, **prioridade máxima**).
+Se a pessoa mandar uma pasta de fontes dela, pôr o caminho em `"pasta"` no `<SKILL>/fontes.json` e acrescentar as famílias no papel certo (`arquivo` relativo à pasta). Pular fontes DEMO / personal use.
 Ajuste com várias opções = alternar entre elas conforme a cena (ex.: ritmo ["Suave","Agressivo"] = suave nas explicações, agressivo nos ganchos; várias cores = cada cena/tópico usa a próxima da lista).
 Responder numa linha o que entendeu e começar. Não pedir confirmação.
 
 ## 4. Editar (HyperFrames)
-Receitas de cada estilo e regras de movimento: **[estilos.md](estilos.md)**. Ler antes de montar.
+Receitas de cada estilo e regras de movimento: **[estilos.md](estilos.md)**. Ler antes de montar. O padrão de acabamento (vídeos de referência analisados quadro a quadro, com som) está em **[referencias.md](referencias.md)**: ler sempre que o estilo for `ui-viva` ou `motion-explicativo`.
 
 - Se o plugin do HyperFrames estiver instalado, carregar a skill `hyperframes:hyperframes` antes de tudo (contrato de render e ciclo de trabalho) e usar `hyperframes:hyperframes-registry` antes de construir à mão algo que já existe pronto (transições, kinetic type, legendas, gráficos, movimentos de câmera). Para sons, logos e recorte de pessoa: `hyperframes:media-use` (ferramentas locais gratuitas).
 - `motor` = "Remotion" só se a pessoa já tiver um projeto Remotion configurado; senão usar HyperFrames e avisar numa linha.

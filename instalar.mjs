@@ -25,8 +25,13 @@ if (fs.existsSync(estilosAntigo)) {
   if (i >= 0) prefs = t.slice(i);
 }
 
+// guarda o catálogo de fontes se a pessoa já configurou a pasta dela
+let fontesAntigo = null;
+try { const f = JSON.parse(fs.readFileSync(path.join(destino, 'fontes.json'), 'utf8')); if (f.pasta) fontesAntigo = f; } catch {}
+
 fs.mkdirSync(destino, { recursive: true });
 for (const arq of fs.readdirSync(origem)) {
+  if (arq === 'fontes.json' && fontesAntigo) continue;
   fs.copyFileSync(path.join(origem, arq), path.join(destino, arq));
 }
 if (prefs) {

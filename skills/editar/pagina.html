@@ -130,6 +130,98 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--suav
 .mini div:nth-child(2)::after{animation-delay:.4s}.mini div:nth-child(3)::after{animation-delay:.8s}.mini div:nth-child(4)::after{animation-delay:1.2s}
 @keyframes brilho{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
 
+/* ---------- UI viva: programa recriado, câmera passeando em 3D ---------- */
+.uivBg{position:absolute;inset:0;background:linear-gradient(160deg,#dcecff,#b9d8ff 55%,#cfe2ff)}
+.uivBg i{position:absolute;border-radius:50%;filter:blur(10px);animation:respira 7s ease-in-out infinite alternate}
+.uivBg i:nth-child(1){width:55%;aspect-ratio:1;left:-12%;top:-10%;background:#7fb6ff}
+.uivBg i:nth-child(2){width:45%;aspect-ratio:1;right:-10%;bottom:-12%;background:#5ac8fa;animation-delay:-3s}
+.uivBg i:nth-child(3){width:30%;aspect-ratio:1;right:20%;top:8%;background:#ffffffaa;animation-delay:-5s}
+@keyframes respira{0%{transform:translate(0,0) scale(1)}60%{transform:translate(8%,6%) scale(1.15)}100%{transform:translate(-4%,10%) scale(1.05)}}
+.camv{position:absolute;left:8%;top:18%;width:84%;aspect-ratio:16/10;transform-origin:50% 50%;animation:camv 9s infinite;will-change:transform,filter}
+.tela.v .camv{left:-30%;top:34%;width:160%}
+@keyframes camv{
+ 0%{transform:perspective(700px) rotateX(22deg) rotateY(-18deg) scale(.86) translate(0,0);filter:blur(0);animation-timing-function:cubic-bezier(.3,0,.2,1)}
+ 16%{transform:perspective(700px) rotateX(16deg) rotateY(-12deg) scale(.95) translate(0,0);filter:blur(0);animation-timing-function:cubic-bezier(.7,0,.3,1)}
+ 24%{filter:blur(1.6px)}
+ 31%{transform:perspective(700px) rotateX(9deg) rotateY(8deg) scale(2.3) translate(-36%,-29%);filter:blur(0);animation-timing-function:linear}
+ 52%{transform:perspective(700px) rotateX(7deg) rotateY(10deg) scale(2.42) translate(-37%,-30%);filter:blur(0);animation-timing-function:cubic-bezier(.7,0,.3,1)}
+ 58%{filter:blur(1.8px)}
+ 64%{transform:perspective(700px) rotateX(10deg) rotateY(-9deg) scale(2.1) translate(37%,-29%);filter:blur(0);animation-timing-function:linear}
+ 82%{transform:perspective(700px) rotateX(11deg) rotateY(-11deg) scale(2.2) translate(38%,-30%);filter:blur(0);animation-timing-function:cubic-bezier(.6,0,.2,1)}
+ 88%{filter:blur(1.2px)}
+ 100%{transform:perspective(700px) rotateX(22deg) rotateY(-18deg) scale(.86) translate(0,0);filter:blur(0)}}
+.app{position:absolute;inset:0;background:#1d1f26;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -20px #0b2a5c99,0 0 0 1px #ffffff1a;font:600 2.1cqw Inter;color:#cfd3dc}
+.tela.v .app{font-size:2.6cqw}
+.app .topo{height:6%;background:#2a2d36;display:flex;align-items:center;gap:1.4%;padding-left:2%}
+.app .topo i{width:1.6%;aspect-ratio:1;border-radius:50%;background:#ff5f57}.app .topo i:nth-child(2){background:#febc2e}.app .topo i:nth-child(3){background:#28c840}
+.app .prev{position:absolute;left:2%;right:2%;top:9%;height:50%;border-radius:4px;background:radial-gradient(60% 70% at 35% 40%,#3a4a6e,#11131a);overflow:hidden}
+.app .prev::before{content:"";position:absolute;left:8%;bottom:0;width:26%;height:72%;border-radius:40% 40% 0 0;background:linear-gradient(#e8c5a8,#8a6450)}
+.app .prev::after{content:"";position:absolute;right:6%;top:12%;width:44%;height:56%;border-radius:3px;background:linear-gradient(135deg,var(--cor),var(--cor2));opacity:.85}
+.app .rec{position:absolute;right:4%;top:6%;z-index:2;display:flex;align-items:center;gap:.4em;background:#ff3b30;color:#fff;border-radius:3px;padding:.15em .5em;font-size:.8em;opacity:0;animation:recOn 9s infinite}
+@keyframes recOn{0%,35%{opacity:0}37%,100%{opacity:1}}
+.app .docks{position:absolute;left:2%;right:2%;top:62%;bottom:4%;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5%}
+.app .dock{background:#272a33;border-radius:4px;padding:5% 6%;display:flex;flex-direction:column;gap:7%;overflow:hidden}
+.app .dock b{font-size:.85em;color:#8b93a7;font-weight:600}
+.app .dock i{display:block;height:13%;border-radius:2px;background:#353946}
+.app .dock i.on{background:linear-gradient(90deg,var(--cor),var(--cor2))}
+.app .lin{opacity:0;transform:translateY(60%) scale(1.3);animation:linEntra 9s infinite}
+.app .lin.a{animation-name:linA}.app .lin.b{animation-name:linB}.app .lin.c{animation-name:linC}
+@keyframes linA{0%,62%{opacity:0;transform:translateY(80%) scale(1.4)}66%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes linB{0%,66%{opacity:0;transform:translateY(80%) scale(1.4)}70%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes linC{0%,70%{opacity:0;transform:translateY(80%) scale(1.4)}74%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+.app .btns{display:flex;flex-direction:column;gap:7%}
+.app .btnr{border-radius:3px;padding:6% 0;text-align:center;font-size:.8em;background:#353946;color:#cfd3dc;position:relative}
+.app .btnr.rec1{background:#3a3f4d;animation:aperta 9s infinite}
+@keyframes aperta{0%,33%{transform:scale(1);background:#3a3f4d;box-shadow:none}30%{box-shadow:0 0 0 2px var(--cor2)}35%{transform:scale(.9)}38%,92%{transform:scale(1);background:#ff3b30;color:#fff}100%{background:#3a3f4d}}
+.app .onda{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;border-radius:50%;border:2px solid #fff;transform:translate(-50%,-50%) scale(0);opacity:0;animation:onda 9s infinite}
+@keyframes onda{0%,34%{transform:translate(-50%,-50%) scale(0);opacity:0}35%{opacity:.9}44%,100%{transform:translate(-50%,-50%) scale(4);opacity:0}}
+.dica3d{position:absolute;right:3%;top:47%;z-index:3;background:#fff;color:#0b1220;font-weight:800;font-size:1.05em;padding:.35em .7em;border-radius:6px;box-shadow:0 8px 20px -6px #0006;white-space:nowrap;opacity:0;animation:dica3d 9s infinite}
+.dica3d b{color:var(--cor)}
+@keyframes dica3d{0%,31%{opacity:0;transform:translateY(30%) scale(.7)}35%{opacity:1;transform:translateY(-6%) scale(1.06)}38%,50%{opacity:1;transform:none}54%,100%{opacity:0;transform:translateY(-20%)}}
+.cur3d{position:absolute;width:5%;aspect-ratio:1;z-index:4;animation:cur3d 9s infinite;filter:drop-shadow(1px 3px 2px #0008)}
+.cur3d::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#9fd0ff,var(--cor) 60%,#0a3c8c);clip-path:polygon(0 0,0 82%,26% 62%,46% 100%,60% 94%,42% 57%,78% 56%)}
+@keyframes cur3d{0%{left:46%;top:30%;animation-timing-function:cubic-bezier(.6,0,.2,1)}28%{left:84%;top:82%}33%{left:84%;top:82%;transform:scale(1)}35%{transform:scale(.75)}37%{transform:scale(1)}54%{left:84%;top:82%;animation-timing-function:cubic-bezier(.6,0,.2,1)}64%{left:12%;top:76%}82%{left:13%;top:77%}100%{left:46%;top:30%}}
+
+/* ---------- motion explicativo ---------- */
+.mxBg{position:absolute;inset:0;background:#06221f;overflow:hidden}
+.mxBg i{position:absolute;border-radius:50%;border:3px solid var(--cor2);filter:blur(1px);opacity:.5;animation:anel 10s linear infinite}
+.mxBg i:nth-child(1){width:90%;aspect-ratio:1;left:-40%;top:-30%}
+.mxBg i:nth-child(2){width:70%;aspect-ratio:1;right:-35%;bottom:-25%;animation-direction:reverse;border-color:var(--cor)}
+.mxBg i:nth-child(3){width:60%;aspect-ratio:1;left:20%;top:30%;background:radial-gradient(var(--cor2),transparent 65%);border:0;filter:blur(14px);opacity:.35;animation:respira 6s ease-in-out infinite alternate}
+@keyframes anel{to{transform:rotate(360deg) scale(1.08)}}
+.mxFlash{position:absolute;inset:0;background:var(--cor2);opacity:0;animation:mxFlash 7s infinite}
+@keyframes mxFlash{0%,58%{opacity:0}59%,66%{opacity:1}67%,100%{opacity:0}}
+.mxT{position:absolute;left:8%;right:8%;top:38%;font:400 7cqw Inter;color:#eafff6;line-height:1.25;letter-spacing:-.02em}
+.tela.h .mxT{font-size:5.8cqw;top:40%}
+.mxT2 .p,.mxT2 .rx{animation-name:mxP2!important}
+.mxT2 .rx::before{animation-name:varre2!important}
+@keyframes mxP2{0%,68%{opacity:0;transform:translateY(40%)}73%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:translateY(-40%);filter:blur(3px)}}
+@keyframes varre2{0%,73%{transform:scaleX(0)}79%,100%{transform:scaleX(1)}}
+.combo .ex,.chip.fonte{font-synthesis:none}
+.mxT .p{display:inline-block;opacity:0;animation:mxP 7s infinite}
+.mxT .p:nth-child(2){animation-delay:.25s}.mxT .p:nth-child(3){animation-delay:.5s}.mxT .p:nth-child(4){animation-delay:.75s}
+@keyframes mxP{0%{opacity:0;transform:translateY(40%)}5%,50%{opacity:1;transform:none}56%,100%{opacity:0;transform:translateY(-40%);filter:blur(3px)}}
+.mxT .rx{position:relative;isolation:isolate;display:inline-block;font-weight:800;color:#06221f;padding:0 .2em;opacity:0;animation:mxP 7s 1.05s infinite}
+.mxT .rx::before{content:"";position:absolute;inset:-.05em 0;background:linear-gradient(90deg,var(--cor2),var(--leg,#ffd60a));z-index:-1;transform-origin:left;animation:varre 7s 1.05s infinite;border-radius:.12em}
+@keyframes varre{0%{transform:scaleX(0)}6%,100%{transform:scaleX(1)}}
+.mxStar{position:absolute;width:9%;aspect-ratio:1;background:var(--leg,#ffd60a);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);animation:mxStar 7s cubic-bezier(.6,0,.2,1) infinite;filter:drop-shadow(0 0 6px var(--leg,#ffd60a))}
+@keyframes mxStar{0%{left:-10%;top:70%;transform:rotate(0) scale(.6)}18%{left:72%;top:30%;transform:rotate(200deg) scale(1)}50%{left:76%;top:28%;transform:rotate(260deg) scale(1.1)}60%{left:45%;top:45%;transform:rotate(400deg) scale(9)}66%{left:45%;top:45%;transform:rotate(420deg) scale(0)}100%{left:-10%;top:70%;transform:scale(0)}}
+.mxNum{position:absolute;left:0;right:0;top:34%;text-align:center;font:900 22cqw Inter;color:#06221f;letter-spacing:-.05em;opacity:0;animation:mxNum 7s infinite}
+.tela.h .mxNum{font-size:14cqw}
+@keyframes mxNum{0%,60%{opacity:0;transform:scale(1.6)}63%{opacity:1;transform:scale(.96)}66%{opacity:1;transform:scale(1)}70%,100%{opacity:0;transform:scale(1);filter:blur(4px)}}
+.aviso{margin:-4px 0 14px;font-size:13px;color:#7cc4ff}
+
+/* ---------- fontes ---------- */
+.combo{display:block;text-align:left;border:1px solid var(--linha);background:var(--bg2);color:var(--texto);border-radius:18px;padding:12px 14px;cursor:pointer;box-shadow:var(--brilho);transition:.25s;min-width:0}
+.combo:hover{transform:translateY(-2px);border-color:rgba(170,215,255,.4)}
+.combo.on{background:linear-gradient(180deg,rgba(90,200,250,.35),rgba(10,132,255,.35));border-color:rgba(180,225,255,.7)}
+.combo .nm{font:600 12px Inter;color:var(--suave);margin-bottom:6px}
+.combo.on .nm{color:#fff}
+.combo .ex{font-size:26px;line-height:1.05;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.combo .ex .k{color:var(--cor2)}
+.combos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.chip.fonte{font-size:17px;padding:6px 12px}
+
 /* ---------- ajustes ---------- */
 .ajustes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .grupo{position:relative;background:var(--card);border:1px solid var(--linha);border-radius:24px;padding:16px;box-shadow:var(--brilho),0 20px 40px -28px #000c}
@@ -181,6 +273,7 @@ textarea:focus{outline:2px solid var(--cor);border-color:transparent}
     </div>
     <div class="video-box" id="videoBox">
       <video id="vid" muted playsinline loop preload="metadata"></video>
+      <div id="audIc" style="display:none;width:120px;height:90px;border-radius:10px;background:linear-gradient(135deg,#0a84ff,#5ac8fa);place-items:center;font-size:40px;cursor:pointer" title="Ouvir">🎙️</div>
       <div><div class="nome" id="vNome">Carregando…</div><div class="meta" id="vMeta"></div></div>
     </div>
   </header>
@@ -189,10 +282,14 @@ textarea:focus{outline:2px solid var(--cor);border-color:transparent}
   <div class="abas" id="abasFormato"></div>
 
   <h2>Estilo de edição</h2>
+  <div class="aviso" id="avisoAudio" style="display:none">🎙️ Só áudio: o vídeo vai ser 100% animação, então aparecem só os estilos que não precisam de ti na tela.</div>
   <div class="grade" id="grade"></div>
 
   <h2>Cores</h2>
   <div class="ajustes" id="cores"></div>
+
+  <h2>Fontes</h2>
+  <div class="ajustes" id="fontes"></div>
 
   <h2>Detalhes</h2>
   <div class="ajustes" id="ajustes"></div>
@@ -218,7 +315,27 @@ const PESSOA = `<svg viewBox="0 0 100 100"><defs><linearGradient id="pele" x1="0
 const cam = (cls='', style='') => `<div class="cam l ${cls}" style="${style}"><div class="pessoa">${PESSOA}</div></div>`;
 const camZ = (cls='', style='', z='zv') => `<div class="cam l ${cls}" style="${style}"><div class="l ${z}" style="inset:0"><div class="pessoa">${PESSOA}</div></div></div>`;
 
+const UIV = `<div class="uivBg"><i></i><i></i><i></i></div>
+  <div class="camv"><div class="app"><div class="topo"><i></i><i></i><i></i></div>
+    <div class="prev"><div class="rec">● REC</div></div>
+    <div class="docks">
+      <div class="dock"><b>Cenas</b><i class="on"></i><i class="lin a"></i><i class="lin b"></i><i class="lin c"></i></div>
+      <div class="dock"><b>Fontes</b><i></i><i></i><i></i></div>
+      <div class="dock"><b>Mixer</b><i class="on" style="width:70%"></i><i style="width:45%"></i></div>
+      <div class="dock"><b>Controles</b><div class="btns"><div class="btnr">Transmitir</div><div class="btnr rec1">Gravar<span class="onda"></span></div><div class="btnr">Config.</div></div></div>
+    </div>
+    <div class="dica3d">Clique para <b>gravar</b></div>
+    <div class="cur3d"></div></div></div>`;
 const ESTILOS = [
+  {id:'ui-viva', f:'ambos', nome:'UI viva (sistema em código)', tags:['SaaS','Tutorial','Novo'], semPessoa:true,
+   desc:'O programa recriado em código como se fosse gravação de tela, mas vivo: a câmera passeia em 3D pelas funções que tu cita, cursor 3D clica, a interface vai se montando.',
+   html:UIV},
+  {id:'motion-explicativo', f:'ambos', nome:'Motion explicativo', tags:['Narração','Lançamento','Novo'], semPessoa:true,
+   desc:'Só motion design: palavras entrando com realce, anéis e formas vivas no fundo, um símbolo que atravessa as cenas, flashes de cor na batida. Ótimo pra animar só o áudio.',
+   html:`<div class="mxBg"><i></i><i></i><i></i></div>
+     <div class="mxT"><span class="p">tudo&nbsp;</span><span class="p">começa&nbsp;</span><span class="p">com&nbsp;</span><span class="p">uma&nbsp;</span><span class="rx">ideia</span></div>
+     <div class="mxT mxT2"><span class="p">e&nbsp;</span><span class="p">cresce&nbsp;</span><span class="p">muito&nbsp;</span><span class="p">mais&nbsp;</span><span class="rx">rápido</span></div>
+     <div class="mxStar"></div><div class="mxFlash"></div><div class="mxNum">3x</div>`},
   {id:'tela-dividida', f:'9:16', nome:'Tela dividida', tags:['Shorts','Reels','TikTok'],
    desc:'Informação na metade de cima trocando o tempo todo, tu na metade de baixo com zoom vivo. Legenda no meio.',
    html:`<div class="l" style="inset:0 0 50% 0;overflow:hidden"><div class="fundo"></div><div class="grid-bg"></div>
@@ -280,7 +397,7 @@ const ESTILOS = [
      <div class="l" style="left:9%;top:42%;display:grid;gap:7cqw;font-size:3.6cqw">
        <div class="item"><span class="dot"></span>Grava sem roteiro</div><div class="item"><span class="dot"></span>A IA corta os erros</div><div class="item"><span class="dot"></span>Posta no mesmo dia</div></div>
      ${cam('bolha flut','right:6%;bottom:8%;width:24%;aspect-ratio:1')}`},
-  {id:'automatico', f:'ambos', nome:'Automático (mix)', tags:['Tu decide'],
+  {id:'automatico', f:'ambos', nome:'Automático (mix)', tags:['Tu decide'], semPessoa:true,
    desc:'Eu escolho cena por cena o que encaixa melhor com o que tu tá falando, misturando os estilos acima.',
    html:`<div class="fundo"></div><div class="mini"><div></div><div></div><div></div><div></div></div>
      <div class="l big" style="left:0;right:0;top:50%;transform:translateY(-50%);font-size:12cqw">✦ <b>mix</b></div>`},
@@ -291,8 +408,9 @@ const AJUSTES = [
   {id:'ritmo', t:'Ritmo do movimento', d:'Zoom e elementos nunca param; aqui é a intensidade.', op:['Suave','Médio','Agressivo'], v:'Médio'},
   {id:'legenda', t:'Legenda', d:'', op:['Palavra por palavra','Frase curta','Só palavras-chave','Sem legenda'], v:'Palavra por palavra'},
   {id:'cortes', t:'Cortes', d:'Tirar respiração, silêncio e erros.', op:['Cortar pausas e erros','Só pausas longas','Não cortar'], v:'Cortar pausas e erros'},
-  {id:'sfx', t:'Efeitos sonoros', d:'Whoosh, pops de UI, cliques (Pixabay).', op:['Baixo','Médio','Sem SFX'], v:'Baixo'},
-  {id:'musica', t:'Música de fundo', d:'', op:['Sem música','Música baixinha'], v:'Sem música'},
+  {id:'sfx', t:'Efeitos sonoros', d:'Whoosh nos movimentos, blips nos itens, brilhos, cliques e batida grave nas trocas (Pixabay).', op:['Baixo','Médio','Sem SFX'], v:'Baixo'},
+  {id:'musica', t:'Música de fundo', d:'"Marcando o ritmo" = cortes e textos caem na batida, como nos vídeos de motion.', op:['Sem música','Música baixinha','Trilha marcando o ritmo'], v:'Sem música'},
+  {id:'elementos', t:'Elementos visuais', d:'Celular, notebook, ícones e objetos que aparecem.', op:['3D realista','2D Material 3','Eu decido'], v:'3D realista'},
   {id:'logos', t:'Logos e ícones', d:'Quando eu citar marcas/ferramentas.', op:['Logos 3D reais','Ícones simples','Não mostrar'], v:'Logos 3D reais'},
   {id:'motor', t:'Motor da edição', d:'O que gera o vídeo. O estilo é o mesmo nos dois.', op:['Eu decido','HyperFrames','Remotion'], v:'Eu decido'},
   {id:'gancho', t:'Começo (gancho)', d:'Primeiros 3 segundos.', op:['Gancho forte com título','Começar direto','Eu decido'], v:'Gancho forte com título'},
@@ -318,9 +436,10 @@ function abas(){
     if(estado.formato!=='Os dois') estado.estilos=estado.estilos.filter(id=>{const f=ESTILOS.find(e=>e.id===id).f;return f==='ambos'||f===estado.formato;});
     abas();grade();resumo();});
 }
+const permitido = (e) => estado.midia!=='audio' || e.semPessoa;
 function grade(){
   const g = document.getElementById('grade');
-  const lista = ESTILOS.filter(e=>estado.formato==='Os dois'||e.f===estado.formato||e.f==='ambos');
+  const lista = ESTILOS.filter(e=>(estado.formato==='Os dois'||e.f===estado.formato||e.f==='ambos') && permitido(e));
   g.innerHTML = lista.map(e=>{
     const v = e.f==='16:9' ? 'h' : (e.f==='ambos' ? (estado.formato==='16:9'?'h':'v') : 'v');
     const i = estado.estilos.indexOf(e.id);
@@ -400,12 +519,78 @@ function resumo(){
     : 'Escolhe pelo menos um estilo.';
 }
 
+/* ---------- fontes ---------- */
+const PAPEIS_FONTE = [
+  {id:'bold', t:'Bold (impacto)', d:'Palavras fortes, números e títulos.'},
+  {id:'serifa', t:'Serifada', d:'Contraste elegante, de preferência itálica.'},
+  {id:'escrita', t:'Escrita (manuscrita)', d:'Uma palavra com toque pessoal.'},
+  {id:'texto', t:'Texto e interface', d:'Legenda, rótulos e telas de sistema.'},
+];
+const COMBOS = [
+  {n:'Mistura viral', d:'bold + serifa + escrita', ex:[['texto','o '],['bold','MELHOR'],['texto',' '],['serifa','jeito'],['texto',' de '],['escrita','editar']]},
+  {n:'Bold + serifa', d:'impacto com elegância', ex:[['bold','PARE'],['texto',' de '],['serifa','perder tempo']]},
+  {n:'Bold + escrita', d:'impacto com assinatura', ex:[['bold','ISSO'],['texto',' muda '],['escrita','tudo']]},
+  {n:'Só bold', d:'impacto puro', ex:[['bold','NINGUÉM TE CONTA']]},
+  {n:'Limpa SaaS', d:'texto de interface', ex:[['texto','Gravação '],['textoF','automática']]},
+  {n:'Eu decido', d:'escolho por cena', ex:[['serifa','tu '],['bold','escolhe'],['escrita',' nada']]},
+];
+let FONTES = {bold:[], serifa:[], escrita:[], texto:[]};
+const FONTES_DEMO = {bold:[{id:'bebas',nome:'Bebas Neue',google:'Bebas Neue',peso:400,caixaAlta:true}], serifa:[{id:'playfair',nome:'Playfair Display Itálico',google:'Playfair Display',peso:'400 900',italico:true}], escrita:[{id:'greatvibes',nome:'Great Vibes',google:'Great Vibes',peso:400}], texto:[{id:'inter',nome:'Inter',google:'Inter',peso:'100 900'}]};
+estado.ajustes.fontes = ['Mistura viral'];
+estado.fontes = {bold:[], serifa:[], escrita:[], texto:[]};
+const achaF = (papel,id) => FONTES[papel].find(f=>f.id===id);
+function famCss(f){ return f.local ? `'F_${f.id}'` : `'${f.google}'`; }
+function estiloF(f, papel){
+  if(!f) return '';
+  const peso = typeof f.peso==='number' ? f.peso : (papel==='serifa'?600:papel==='texto'?500:700);
+  return `font-family:${famCss(f)},serif;font-weight:${peso};${f.italico?'font-style:italic;':''}${f.caixaAlta?'text-transform:uppercase;letter-spacing:.01em;':''}`;
+}
+function carregaFontes(){
+  const css = [], goog = new Set();
+  for(const lista of Object.values(FONTES)) for(const f of lista){
+    if(f.local) css.push(`@font-face{font-family:'F_${f.id}';src:url('/fonte?f=${encodeURIComponent(f.arquivo)}');font-weight:${f.peso||400};font-style:${f.italico?'italic':'normal'};font-display:swap}`);
+    else if(f.google) goog.add(f.google);
+  }
+  const st = document.createElement('style'); st.textContent = css.join('\n'); document.head.appendChild(st);
+  if(goog.size){ const l = document.createElement('link'); l.rel='stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?' + [...goog].map(g=>'family='+g.replace(/ /g,'+')+':ital,wght@0,400;0,700;0,900;1,400;1,700').join('&') + '&display=swap';
+    document.head.appendChild(l); }
+  for(const p of Object.keys(estado.fontes)) if(!estado.fontes[p].length && FONTES[p][0]) estado.fontes[p] = [FONTES[p][0].id];
+}
+function fontes(){
+  const el = document.getElementById('fontes');
+  const prim = (p) => achaF(p, estado.fontes[p][0]) || FONTES[p][0];
+  const pedaco = ([papel, t]) => papel==='textoF'
+    ? `<span class="k" style="${estiloF(prim('texto'),'texto')};font-weight:800">${t}</span>`
+    : `<span class="${papel==='texto'?'':'k'}" style="${estiloF(prim(papel),papel)}">${t}</span>`;
+  el.innerHTML = `<div class="grupo" style="grid-column:1/-1"><h4>Como misturar</h4><div class="dica">Marca um ou vários jeitos: eu vario entre eles ao longo do vídeo (nunca mais de 2 famílias na mesma tela).</div>
+    <div class="combos">${COMBOS.map(c=>`<button class="combo ${estado.ajustes.fontes.includes(c.n)?'on':''}" data-n="${c.n}"><div class="nm">${estado.ajustes.fontes.includes(c.n)?'✓ ':''}${c.n} · ${c.d}</div><div class="ex">${c.ex.map(pedaco).join('')}</div></button>`).join('')}</div></div>`
+   + PAPEIS_FONTE.map(r=>`<div class="grupo"><h4>${r.t} <span class="qtd">${estado.fontes[r.id].length>1?estado.fontes[r.id].length+' fontes · alterno':''}</span></h4><div class="dica">${r.d}</div><div class="chips">${
+      FONTES[r.id].map(f=>`<button class="chip fonte ${estado.fontes[r.id].includes(f.id)?'on':''}" data-r="${r.id}" data-id="${f.id}" style="${estiloF(f,r.id)}" title="${f.nome}${f.local?' (da tua pasta)':' (Google Fonts)'}">${r.id==='texto'?f.nome:f.nome.replace(/ Itálico| Super| Black/g,'')}</button>`).join('') || '<span class="dica">Nenhuma fonte desse tipo.</span>'}</div></div>`).join('');
+  el.querySelectorAll('.combo').forEach(b=>b.onclick=()=>{alterna('fontes', b.dataset.n); fontes(); resumo();});
+  el.querySelectorAll('.chip.fonte').forEach(b=>b.onclick=()=>{const r=b.dataset.r,id=b.dataset.id,l=estado.fontes[r];
+    if(l.includes(id)){ if(l.length>1) estado.fontes[r]=l.filter(x=>x!==id); } else estado.fontes[r]=[...l,id];
+    fontes();});
+}
+
 let info = {};
 async function carregar(){
+  try{ const fr = await (await fetch('/fontes')).json(); FONTES = {...FONTES, ...fr.familias}; }
+  catch(e){ FONTES = FONTES_DEMO; }
+  carregaFontes();
   try{
     info = await (await fetch('/info')).json();
     document.getElementById('vNome').textContent = info.nome || 'Sem vídeo (modo demonstração)';
-    if(info.video){
+    estado.midia = info.midia || 'video';
+    if(info.video && estado.midia==='audio'){
+      document.getElementById('vid').style.display='none';
+      const ic = document.getElementById('audIc'); ic.style.display='grid';
+      document.getElementById('avisoAudio').style.display='block';
+      const a = new Audio('/video');
+      a.onloadedmetadata = ()=>{ const d=a.duration; document.getElementById('vMeta').textContent = `Só áudio · ${Math.floor(d/60)}:${String(Math.round(d%60)).padStart(2,'0')} · ${info.tamanho||''}`; };
+      ic.onclick = ()=>{ a.paused ? a.play() : a.pause(); };
+      estado.estilos = estado.estilos.filter(id=>ESTILOS.find(e=>e.id===id)?.semPessoa);
+    } else if(info.video){
       const v = document.getElementById('vid');
       v.src = '/video';
       v.onloadedmetadata = ()=>{
@@ -422,13 +607,16 @@ async function carregar(){
       if(an.cores) estado.cores = {...estado.cores, ...an.cores};
       else if(an.cor) estado.cores.destaque = Array.isArray(an.cor)?an.cor:[an.cor];
       if(an.coresExtras) estado.coresExtras = {...estado.coresExtras, ...an.coresExtras};
+      if(an.fontes) for(const p of Object.keys(estado.fontes)) estado.fontes[p] = (an.fontes[p]||[]).filter(id=>achaF(p,id)).length ? an.fontes[p].filter(id=>achaF(p,id)) : estado.fontes[p];
+      if(estado.midia==='audio') estado.estilos = estado.estilos.filter(id=>ESTILOS.find(e=>e.id===id)?.semPessoa);
       document.getElementById('obs').value = info.anterior.observacoes||''; }
   }catch(e){ document.getElementById('vNome').textContent='Modo demonstração'; document.getElementById('vid').style.display='none'; }
-  abas(); grade(); ajustes(); cores(); aplicaCores(); resumo();
+  abas(); grade(); ajustes(); cores(); fontes(); aplicaCores(); resumo();
 }
 document.getElementById('enviar').onclick = async ()=>{
   const corpo = {...estado, observacoes:document.getElementById('obs').value.trim(),
-    estilosNomes: estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome), quando:new Date().toISOString()};
+    estilosNomes: estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome), quando:new Date().toISOString(),
+    fontesDetalhe: Object.fromEntries(Object.entries(estado.fontes).map(([p,l])=>[p, l.map(id=>{const f=achaF(p,id)||{};return {nome:f.nome, arquivo:f.local?f.arquivo:null, google:f.google||null};})]))};
   window.__escolha = corpo;
   try{
     const r = await fetch('/escolha',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)});

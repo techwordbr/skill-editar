@@ -14,8 +14,16 @@ const saida = video
   ? path.join(path.dirname(video), path.parse(video).name + '.edicao.json')
   : path.join(pasta, 'ultima-escolha.json');
 
-const tipos = { '.mp4': 'video/mp4', '.mov': 'video/quicktime', '.webm': 'video/webm', '.mkv': 'video/x-matroska', '.m4v': 'video/mp4' };
+const tipos = { '.mp4': 'video/mp4', '.mov': 'video/quicktime', '.webm': 'video/webm', '.mkv': 'video/x-matroska', '.m4v': 'video/mp4',
+  '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.m4a': 'audio/mp4', '.aac': 'audio/aac', '.ogg': 'audio/ogg', '.opus': 'audio/ogg', '.flac': 'audio/flac' };
+const midia = video && tipos[path.extname(video).toLowerCase()]?.startsWith('audio') ? 'audio' : 'video';
 const mb = (b) => (b / 1048576).toFixed(1) + ' MB';
+
+// catálogo de fontes (fontes.json ao lado deste arquivo). "pasta" = onde estão os arquivos da pessoa.
+let fontes = { pasta: null, familias: {} };
+try { fontes = JSON.parse(fs.readFileSync(path.join(pasta, 'fontes.json'), 'utf8')); } catch {}
+const pastaFontes = fontes.pasta && fs.existsSync(fontes.pasta) ? path.resolve(fontes.pasta) : null;
+const tiposFonte = { '.ttf': 'font/ttf', '.otf': 'font/otf', '.woff': 'font/woff', '.woff2': 'font/woff2' };
 
 const srv = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://x');
@@ -28,9 +36,24 @@ const srv = http.createServer((req, res) => {
     try { anterior = JSON.parse(fs.readFileSync(saida, 'utf8')); } catch {}
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({
-      video: !!video, nome: video ? path.basename(video) : null, caminho: video,
+      video: !!video, midia, nome: video ? path.basename(video) : null, caminho: video,
       tamanho: video ? mb(fs.statSync(video).size) : null, anterior,
     }));
+  }
+  if (url.pathname === '/fontes') {
+    const familias = {};
+    for (const [papel, lista] of Object.entries(fontes.familias || {}))
+      familias[papel] = lista.map((f) => ({ ...f, local: !!(pastaFontes && f.arquivo && fs.existsSync(path.join(pastaFontes, f.arquivo))) }))
+        .filter((f) => f.local || f.google);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ pasta: pastaFontes, familias }));
+  }
+  if (url.pathname === '/fonte' && pastaFontes) {
+    const alvo = path.resolve(pastaFontes, url.searchParams.get('f') || '');
+    const tipo = tiposFonte[path.extname(alvo).toLowerCase()];
+    if (!tipo || !alvo.startsWith(pastaFontes + path.sep) || !fs.existsSync(alvo)) { res.writeHead(404); return res.end(); }
+    res.writeHead(200, { 'Content-Type': tipo, 'Cache-Control': 'max-age=3600' });
+    return fs.createReadStream(alvo).pipe(res);
   }
   if (url.pathname === '/video' && video) {
     const tam = fs.statSync(video).size;
@@ -51,7 +74,7 @@ const srv = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const dados = JSON.parse(corpo);
-        dados.video = video;
+        dados.video = video; dados.midia = midia;
         fs.writeFileSync(saida, JSON.stringify(dados, null, 2));
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end('{"ok":true}');

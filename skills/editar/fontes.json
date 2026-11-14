@@ -1,0 +1,256 @@
+{
+    "pasta":  null,
+    "obs":  "pasta = onde estão as fontes da pessoa (null = só Google Fonts). arquivo = relativo à pasta. google = mesma família no Google Fonts. Não usar fontes DEMO / personal use em vídeo comercial.",
+    "familias":  {
+                     "bold":  [
+                                  {
+                                      "id":  "tusker5",
+                                      "nome":  "Tusker Grotesk Super",
+                                      "arquivo":  "TuskerGrotesk-5800Super.otf",
+                                      "peso":  800,
+                                      "caixaAlta":  true
+                                  },
+                                  {
+                                      "id":  "tusker3",
+                                      "nome":  "Tusker Grotesk Largo",
+                                      "arquivo":  "TuskerGrotesk-3800Super.otf",
+                                      "peso":  800,
+                                      "caixaAlta":  true
+                                  },
+                                  {
+                                      "id":  "clash",
+                                      "nome":  "Clash Grotesk",
+                                      "arquivo":  "ClashGrotesk-Bold.otf",
+                                      "peso":  700
+                                  },
+                                  {
+                                      "id":  "basement",
+                                      "nome":  "Basement Grotesque",
+                                      "arquivo":  "basement-grotesque-font/basementgrotesque-black-v1202.otf",
+                                      "peso":  900,
+                                      "caixaAlta":  true
+                                  },
+                                  {
+                                      "id":  "bebas",
+                                      "nome":  "Bebas Neue",
+                                      "arquivo":  "BebasNeue Bold.ttf",
+                                      "google":  "Bebas Neue",
+                                      "peso":  400,
+                                      "caixaAlta":  true
+                                  },
+                                  {
+                                      "id":  "boldonse",
+                                      "nome":  "Boldonse",
+                                      "arquivo":  "Boldonse.ttf",
+                                      "google":  "Boldonse",
+                                      "peso":  400,
+                                      "caixaAlta":  true
+                                  },
+                                  {
+                                      "id":  "archivo",
+                                      "nome":  "Archivo Black",
+                                      "arquivo":  "ArchivoBlack-Regular.ttf",
+                                      "google":  "Archivo Black",
+                                      "peso":  400
+                                  },
+                                  {
+                                      "id":  "montserrat",
+                                      "nome":  "Montserrat Black",
+                                      "arquivo":  "Montserrat-Black.ttf",
+                                      "google":  "Montserrat",
+                                      "peso":  900
+                                  },
+                                  {
+                                      "id":  "poppins",
+                                      "nome":  "Poppins Black",
+                                      "arquivo":  "Poppins-Black.ttf",
+                                      "google":  "Poppins",
+                                      "peso":  900
+                                  },
+                                  {
+                                      "id":  "filson",
+                                      "nome":  "Filson Pro Black",
+                                      "arquivo":  "FilsonProBlack.otf",
+                                      "peso":  900
+                                  },
+                                  {
+                                      "id":  "coolvetica",
+                                      "nome":  "Coolvetica",
+                                      "arquivo":  "coolvetica.regular.otf",
+                                      "peso":  400
+                                  },
+                                  {
+                                      "id":  "barlow",
+                                      "nome":  "Barlow Condensed Black",
+                                      "arquivo":  "BarlowCondensed-Black.ttf",
+                                      "google":  "Barlow Condensed",
+                                      "peso":  900,
+                                      "caixaAlta":  true
+                                  }
+                              ],
+                     "serifa":  [
+                                    {
+                                        "id":  "playfair",
+                                        "nome":  "Playfair Display Itálico",
+                                        "arquivo":  "PlayfairDisplay-Italic[wght].ttf",
+                                        "google":  "Playfair Display",
+                                        "peso":  "400 900",
+                                        "italico":  true
+                                    },
+                                    {
+                                        "id":  "bodoni",
+                                        "nome":  "Bodoni Moda Itálico",
+                                        "arquivo":  "BodoniModa-Italic[opsz,wght].ttf",
+                                        "google":  "Bodoni Moda",
+                                        "peso":  "400 900",
+                                        "italico":  true
+                                    },
+                                    {
+                                        "id":  "cormorant",
+                                        "nome":  "Cormorant Garamond Itálico",
+                                        "arquivo":  "CormorantGaramond-Italic[wght].ttf",
+                                        "google":  "Cormorant Garamond",
+                                        "peso":  "300 700",
+                                        "italico":  true
+                                    },
+                                    {
+                                        "id":  "awesome",
+                                        "nome":  "Awesome Serif Itálico",
+                                        "arquivo":  "AwesomeSerifItalic-BdRegular.otf",
+                                        "peso":  700,
+                                        "italico":  true
+                                    },
+                                    {
+                                        "id":  "gloock",
+                                        "nome":  "Gloock",
+                                        "arquivo":  "Gloock-Regular.ttf",
+                                        "google":  "Gloock",
+                                        "peso":  400
+                                    },
+                                    {
+                                        "id":  "ebgaramond",
+                                        "nome":  "EB Garamond Itálico",
+                                        "arquivo":  "EBGaramond-Italic[wght].ttf",
+                                        "google":  "EB Garamond",
+                                        "peso":  "400 800",
+                                        "italico":  true
+                                    },
+                                    {
+                                        "id":  "baskerville",
+                                        "nome":  "Libre Baskerville Itálico",
+                                        "arquivo":  "LibreBaskerville-Italic[wght].ttf",
+                                        "google":  "Libre Baskerville",
+                                        "peso":  "400 700",
+                                        "italico":  true
+                                    }
+                                ],
+                     "escrita":  [
+                                     {
+                                         "id":  "greatvibes",
+                                         "nome":  "Great Vibes",
+                                         "arquivo":  "GreatVibes-Regular.ttf",
+                                         "google":  "Great Vibes",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "alexbrush",
+                                         "nome":  "Alex Brush",
+                                         "arquivo":  "AlexBrush-Regular.ttf",
+                                         "google":  "Alex Brush",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "sacramento",
+                                         "nome":  "Sacramento",
+                                         "arquivo":  "Sacramento-Regular.ttf",
+                                         "google":  "Sacramento",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "allura",
+                                         "nome":  "Allura",
+                                         "arquivo":  "Allura-Regular.ttf",
+                                         "google":  "Allura",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "parisienne",
+                                         "nome":  "Parisienne",
+                                         "arquivo":  "Parisienne-Regular.ttf",
+                                         "google":  "Parisienne",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "bello",
+                                         "nome":  "Bello Script",
+                                         "arquivo":  "BelloScript.ttf",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "dancing",
+                                         "nome":  "Dancing Script",
+                                         "arquivo":  "DancingScript[wght].ttf",
+                                         "google":  "Dancing Script",
+                                         "peso":  "400 700"
+                                     },
+                                     {
+                                         "id":  "satisfy",
+                                         "nome":  "Satisfy",
+                                         "arquivo":  "Satisfy-Regular.ttf",
+                                         "google":  "Satisfy",
+                                         "peso":  400
+                                     },
+                                     {
+                                         "id":  "italianno",
+                                         "nome":  "Italianno",
+                                         "arquivo":  "Italianno-Regular.ttf",
+                                         "google":  "Italianno",
+                                         "peso":  400
+                                     }
+                                 ],
+                     "texto":  [
+                                   {
+                                       "id":  "inter",
+                                       "nome":  "Inter",
+                                       "arquivo":  "Inter[opsz,wght].ttf",
+                                       "google":  "Inter",
+                                       "peso":  "100 900"
+                                   },
+                                   {
+                                       "id":  "manrope",
+                                       "nome":  "Manrope",
+                                       "arquivo":  "Manrope[wght].ttf",
+                                       "google":  "Manrope",
+                                       "peso":  "200 800"
+                                   },
+                                   {
+                                       "id":  "dmsans",
+                                       "nome":  "DM Sans",
+                                       "arquivo":  "DMSans[opsz,wght].ttf",
+                                       "google":  "DM Sans",
+                                       "peso":  "100 900"
+                                   },
+                                   {
+                                       "id":  "urbanist",
+                                       "nome":  "Urbanist",
+                                       "arquivo":  "Urbanist[wght].ttf",
+                                       "google":  "Urbanist",
+                                       "peso":  "100 900"
+                                   },
+                                   {
+                                       "id":  "lexend",
+                                       "nome":  "Lexend",
+                                       "arquivo":  "Lexend[wght].ttf",
+                                       "google":  "Lexend",
+                                       "peso":  "100 900"
+                                   },
+                                   {
+                                       "id":  "worksans",
+                                       "nome":  "Work Sans",
+                                       "arquivo":  "WorkSans[wght].ttf",
+                                       "google":  "Work Sans",
+                                       "peso":  "100 900"
+                                   }
+                               ]
+                 }
+}

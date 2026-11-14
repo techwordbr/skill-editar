@@ -6,13 +6,24 @@ Manda um vídeo, escolhe numa página **como** ele vai ser editado, e o Claude e
 /editar C:\Videos\meu-video.mp4
 ```
 
+Também funciona **só com o áudio** de uma narração (`/editar C:\Audios\narracao.mp3`): aí o vídeo sai 100% animado.
+
 Abre uma página (azul, estilo Liquid Glass) com prévias animadas de cada estilo:
 
+- **UI viva (novo):** o programa que tu cita é recriado em código como se fosse gravação de tela, mas vivo. A câmera passeia em 3D pelas funções, um cursor 3D clica e a interface se monta enquanto tu fala.
+- **Motion explicativo (novo):** só motion design, com palavras entrando com realce, formas vivas, um símbolo que atravessa as cenas e cortes na batida.
 - **Vertical (Shorts/Reels/TikTok):** tela dividida, ilustrativa + cartão, legenda cinética, recorte/holograma, só elementos
 - **Horizontal (YouTube):** ilustrativa + PiP, lado a lado, review de software, zoom dinâmico, apresentação animada
 - **Automático:** o Claude escolhe cena a cena
 
-Também dá pra escolher cores (destaque, efeitos, legenda), ritmo do movimento, legenda, cortes, efeitos sonoros, música, gancho, e escrever observações. Tudo aceita mais de uma opção.
+Também dá pra escolher:
+- cores (destaque, efeitos, legenda);
+- **fontes**, misturando bold, serifada e escrita no mesmo título (e dá pra usar tua própria pasta de fontes);
+- **elementos 3D realistas ou 2D estilo Material 3**;
+- ritmo, legenda, cortes, efeitos sonoros, trilha marcando o ritmo e gancho;
+- observações livres.
+
+Tudo aceita mais de uma opção. As regras de movimento e de som vêm de vídeos de motion design de referência, analisados quadro a quadro (`skills/editar/referencias.md`).
 
 Tudo roda **no teu computador**: nada é enviado pra servidor nenhum além do que o próprio Claude Code já usa.
 

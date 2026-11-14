@@ -1,7 +1,7 @@
 {
   "name": "editar",
-  "description": "/editar: manda um vídeo, escolhe o estilo de edição Motion SaaS numa página com prévias animadas (tela dividida, ilustrativa, legenda cinética, holograma, PiP, review de software...) e o Claude edita o vídeo em código com HyperFrames.",
-  "version": "1.0.0",
+  "description": "/editar: manda um vídeo (ou só o áudio da narração), escolhe o estilo de edição Motion SaaS numa página com prévias animadas (UI viva, motion explicativo, tela dividida, ilustrativa, legenda cinética, PiP, review de software...), cores e fontes, e o Claude edita em código com HyperFrames.",
+  "version": "1.1.0",
   "author": {
     "name": "Augusto Ramos"
   },
