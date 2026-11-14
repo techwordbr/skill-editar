@@ -29,12 +29,21 @@ Caminho nos argumentos ou arquivo anexado. Se vier só o nome, procurar em Víde
 
 ## 3. Ler a escolha
 Campos: `midia` ("video" | "audio"), `formato` ("9:16" | "16:9" | "Os dois"), `estilos` (ids em ordem = prioridade do mix), `ajustes` {fundo, ritmo, legenda, cortes, sfx, musica, elementos, fontes, logos, motor, gancho} (cada um é uma lista), `cores` {destaque, efeitos, legenda} (listas de hex), `fontesDetalhe` {bold, serifa, escrita, texto} (famílias escolhidas, com arquivo local ou nome no Google Fonts), `observacoes` (texto livre, **prioridade máxima**).
+`programa` {nome, links, comoFunciona, imagens:[{nome, caminho}]}: o programa que aparece no vídeo, quando a pessoa quer que tu conheças um que não conheces (ver "Estudar o programa").
 Se a pessoa mandar uma pasta de fontes dela, pôr o caminho em `"pasta"` no `<SKILL>/fontes.json` e acrescentar as famílias no papel certo (`arquivo` relativo à pasta). Pular fontes DEMO / personal use.
 Ajuste com várias opções = alternar entre elas conforme a cena (ex.: ritmo ["Suave","Agressivo"] = suave nas explicações, agressivo nos ganchos; várias cores = cada cena/tópico usa a próxima da lista).
 Responder numa linha o que entendeu e começar. Não pedir confirmação.
 
 ## 4. Editar (HyperFrames)
 Receitas de cada estilo e regras de movimento: **[estilos.md](estilos.md)**. Ler antes de montar. O padrão de acabamento (vídeos de referência analisados quadro a quadro, com som) está em **[referencias.md](referencias.md)**: ler sempre que o estilo for `ui-viva` ou `motion-explicativo`.
+
+### Estudar o programa (quando `programa` veio preenchido, ou o estilo é `ui-viva`/`review-software`)
+Antes de montar qualquer tela:
+1. **Ler cada print** de `programa.imagens[].caminho` e anotar: layout (barras, painéis, grade), cores, fonte, tamanhos, ícones, textos dos botões, estados.
+2. **Abrir cada link** de `programa.links` (navegador interno do app, se existir; senão buscar a página com a ferramenta de web disponível). Documentação: ler como cada função citada na fala funciona. Site/app: navegar pelas telas públicas e tirar prints (salvar em `<pasta do vídeo>/<nome>-referencias/`). Não fazer login nem criar conta.
+3. Sem links nem prints, mas com `programa.nome`: procurar o site oficial e prints da documentação e seguir o passo 2.
+4. Juntar com `programa.comoFunciona` e a transcrição: lista de **pontos de câmera** (função citada → onde fica na tela → o que acontece ao clicar), na ordem da fala.
+5. Recriar a interface em código fiel aos prints (mesmo layout, cores e textos; nada de logo inventado) e mostrar um still da tela recriada ao lado do print original antes de animar.
 
 - Se o plugin do HyperFrames estiver instalado, carregar a skill `hyperframes:hyperframes` antes de tudo (contrato de render e ciclo de trabalho) e usar `hyperframes:hyperframes-registry` antes de construir à mão algo que já existe pronto (transições, kinetic type, legendas, gráficos, movimentos de câmera). Para sons, logos e recorte de pessoa: `hyperframes:media-use` (ferramentas locais gratuitas).
 - `motor` = "Remotion" só se a pessoa já tiver um projeto Remotion configurado; senão usar HyperFrames e avisar numa linha.

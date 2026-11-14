@@ -20,6 +20,7 @@ Também dá pra escolher:
 - cores (destaque, efeitos, legenda);
 - **fontes**, misturando bold, serifada e escrita no mesmo título (e dá pra usar tua própria pasta de fontes);
 - **elementos 3D realistas ou 2D estilo Material 3**;
+- **o programa que aparece no vídeo**: se o Claude não conhecer, tu cola o link do site/documentação e arrasta (ou cola com Ctrl+V) prints da tela. Ele estuda, refaz a interface em código e anima;
 - ritmo, legenda, cortes, efeitos sonoros, trilha marcando o ritmo e gancho;
 - observações livres.
 

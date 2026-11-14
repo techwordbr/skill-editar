@@ -1,3 +1,5 @@
 node_modules/
 *.edicao.json
 ultima-escolha.json
+*-referencias/
+referencias-enviadas/

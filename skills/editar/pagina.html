@@ -211,6 +211,27 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--suav
 @keyframes mxNum{0%,60%{opacity:0;transform:scale(1.6)}63%{opacity:1;transform:scale(.96)}66%{opacity:1;transform:scale(1)}70%,100%{opacity:0;transform:scale(1);filter:blur(4px)}}
 .aviso{margin:-4px 0 14px;font-size:13px;color:#7cc4ff}
 
+/* ---------- programa de referência ---------- */
+.prog{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.prog{grid-template-columns:1fr}}
+.campo{width:100%;background:var(--bg2);color:var(--texto);border:1px solid var(--linha);border-radius:14px;box-shadow:var(--brilho);padding:10px 12px;font:14px Inter}
+.campo:focus{outline:2px solid var(--cor);border-color:transparent}
+.linhaLink{display:flex;gap:8px}
+.btnP{border:1px solid rgba(180,225,255,.5);background:linear-gradient(180deg,rgba(90,200,250,.5),rgba(10,132,255,.5));color:#fff;font:700 13px Inter;border-radius:12px;padding:0 14px;cursor:pointer;white-space:nowrap}
+.links{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.link{display:flex;align-items:center;gap:8px;font-size:13px;background:#ffffff0d;border:1px solid var(--linha);border-radius:10px;padding:6px 10px;word-break:break-all}
+.link a{color:#9fd0ff;flex:1}
+.x{background:none;border:0;color:var(--suave);cursor:pointer;font-size:16px;line-height:1}
+.x:hover{color:#fb7185}
+.drop{display:block;line-height:1.7;min-height:96px;display:flex;flex-direction:column;justify-content:center;border:1.5px dashed rgba(170,215,255,.45);border-radius:16px;padding:16px;text-align:center;color:var(--suave);font-size:13px;cursor:pointer;transition:.2s;background:#ffffff06}
+.drop.sobre,.drop:hover{border-color:#5ac8fa;background:rgba(90,200,250,.1);color:#fff}
+.drop b{color:#fff}
+.miniaturas{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:10px}
+.mini-img{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:1px solid var(--linha);background:#000}
+.mini-img img{width:100%;height:100%;object-fit:cover;display:block}
+.mini-img .x{position:absolute;top:3px;right:3px;background:#000a;border-radius:50%;width:20px;height:20px;color:#fff;font-size:12px}
+.mini-img.subindo{opacity:.5}
+
 /* ---------- fontes ---------- */
 .combo{display:block;text-align:left;border:1px solid var(--linha);background:var(--bg2);color:var(--texto);border-radius:18px;padding:12px 14px;cursor:pointer;box-shadow:var(--brilho);transition:.25s;min-width:0}
 .combo:hover{transform:translateY(-2px);border-color:rgba(170,215,255,.4)}
@@ -284,6 +305,25 @@ textarea:focus{outline:2px solid var(--cor);border-color:transparent}
   <h2>Estilo de edição</h2>
   <div class="aviso" id="avisoAudio" style="display:none">🎙️ Só áudio: o vídeo vai ser 100% animação, então aparecem só os estilos que não precisam de ti na tela.</div>
   <div class="grade" id="grade"></div>
+
+  <h2>Programa que aparece no vídeo (opcional)</h2>
+  <div class="grupo prog-box">
+    <h4>Se eu não conhecer o programa, me mostra como ele é</h4>
+    <div class="dica">Eu abro os links pra entender como funciona e olho os prints pra copiar a aparência. Depois refaço ele em código e faço a câmera passear pelas funções (estilo UI viva).</div>
+    <div class="prog">
+      <div>
+        <input class="campo" id="progNome" placeholder="Nome do programa (ex.: OBS Studio, CapCut, meu app)">
+        <div class="linhaLink" style="margin-top:10px"><input class="campo" id="progLink" placeholder="Cola o link do site, da documentação ou de um vídeo dele"><button class="btnP" id="addLink" type="button">+ Link</button></div>
+        <div class="links" id="listaLinks"></div>
+        <textarea id="progComo" style="margin-top:10px;min-height:70px" placeholder="Como funciona, em poucas palavras (opcional). Ex.: na tela inicial tem o botão Gravar embaixo à direita; em Configurações escolhe a pasta…"></textarea>
+      </div>
+      <div>
+        <label class="drop" id="drop"><input type="file" id="progImgs" accept="image/png,image/jpeg,image/webp,image/gif" multiple hidden>
+          <span>🖼️ <b>Arrasta os prints aqui</b>, clica pra escolher<br>ou aperta <b>Ctrl+V</b> pra colar um print</span></label>
+        <div class="miniaturas" id="miniaturas"></div>
+      </div>
+    </div>
+  </div>
 
   <h2>Cores</h2>
   <div class="ajustes" id="cores"></div>
@@ -573,8 +613,56 @@ function fontes(){
     fontes();});
 }
 
+/* ---------- programa de referência ---------- */
+estado.programa = {nome:'', links:[], imagens:[], comoFunciona:''};
+const esc = (s) => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function programa(){
+  const p = estado.programa;
+  document.getElementById('progNome').value = p.nome; document.getElementById('progComo').value = p.comoFunciona;
+  document.getElementById('listaLinks').innerHTML = p.links.map((l,i)=>`<div class="link">🔗 <a href="${esc(l)}" target="_blank" rel="noopener">${esc(l)}</a><button class="x" data-i="${i}" title="Tirar">✕</button></div>`).join('');
+  document.querySelectorAll('#listaLinks .x').forEach(b=>b.onclick=()=>{p.links.splice(+b.dataset.i,1); programa();});
+  document.getElementById('miniaturas').innerHTML = p.imagens.map((m,i)=>`<div class="mini-img ${m.subindo?'subindo':''}" title="${esc(m.nome)}"><img src="${m.url}" alt=""><button class="x" data-i="${i}" title="Tirar">✕</button></div>`).join('');
+  document.querySelectorAll('#miniaturas .x').forEach(b=>b.onclick=()=>{p.imagens.splice(+b.dataset.i,1); programa();});
+}
+function addLink(){
+  const inp = document.getElementById('progLink'); let v = inp.value.trim(); if(!v) return;
+  if(!/^https?:\/\//i.test(v)) v = 'https://' + v;
+  if(!estado.programa.links.includes(v)) estado.programa.links.push(v);
+  inp.value = ''; programa();
+}
+async function enviaImagens(arquivos){
+  for(const f of arquivos){
+    if(!/^image\/(png|jpe?g|webp|gif)$/.test(f.type)) continue;
+    const nome = f.name && f.name!=='image.png' ? f.name : `print-${estado.programa.imagens.length+1}.png`;
+    const item = {nome, url:URL.createObjectURL(f), subindo:true};
+    estado.programa.imagens.push(item); programa();
+    try{
+      const r = await fetch('/upload?nome='+encodeURIComponent(nome), {method:'POST', body:f});
+      if(!r.ok) throw 0;
+      const d = await r.json(); Object.assign(item, {caminho:d.caminho, url:d.url, subindo:false});
+    }catch(e){ estado.programa.imagens = estado.programa.imagens.filter(x=>x!==item); document.getElementById('erro').textContent='Não consegui guardar a imagem '+nome+'.'; }
+    programa();
+  }
+}
+function ligaPrograma(){
+  document.getElementById('addLink').onclick = addLink;
+  document.getElementById('progLink').onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addLink(); } };
+  document.getElementById('progNome').oninput = (e)=>estado.programa.nome = e.target.value;
+  document.getElementById('progComo').oninput = (e)=>estado.programa.comoFunciona = e.target.value;
+  document.getElementById('progImgs').onchange = (e)=>{ enviaImagens([...e.target.files]); e.target.value=''; };
+  const d = document.getElementById('drop');
+  d.ondragover = (e)=>{ e.preventDefault(); d.classList.add('sobre'); };
+  d.ondragleave = ()=>d.classList.remove('sobre');
+  d.ondrop = (e)=>{ e.preventDefault(); d.classList.remove('sobre'); enviaImagens([...e.dataTransfer.files]); };
+  document.addEventListener('paste', (e)=>{
+    const imgs = [...(e.clipboardData?.items||[])].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile()).filter(Boolean);
+    if(imgs.length){ e.preventDefault(); enviaImagens(imgs); }
+  });
+}
+
 let info = {};
 async function carregar(){
+  ligaPrograma();
   try{ const fr = await (await fetch('/fontes')).json(); FONTES = {...FONTES, ...fr.familias}; }
   catch(e){ FONTES = FONTES_DEMO; }
   carregaFontes();
@@ -609,12 +697,18 @@ async function carregar(){
       if(an.coresExtras) estado.coresExtras = {...estado.coresExtras, ...an.coresExtras};
       if(an.fontes) for(const p of Object.keys(estado.fontes)) estado.fontes[p] = (an.fontes[p]||[]).filter(id=>achaF(p,id)).length ? an.fontes[p].filter(id=>achaF(p,id)) : estado.fontes[p];
       if(estado.midia==='audio') estado.estilos = estado.estilos.filter(id=>ESTILOS.find(e=>e.id===id)?.semPessoa);
+      if(an.programa) estado.programa = {nome:an.programa.nome||'', links:an.programa.links||[], comoFunciona:an.programa.comoFunciona||'',
+        imagens:(an.programa.imagens||[]).map(m=>({...m, url:'/ref?f='+encodeURIComponent((m.caminho||'').split(/[\\/]/).pop())}))};
       document.getElementById('obs').value = info.anterior.observacoes||''; }
   }catch(e){ document.getElementById('vNome').textContent='Modo demonstração'; document.getElementById('vid').style.display='none'; }
-  abas(); grade(); ajustes(); cores(); fontes(); aplicaCores(); resumo();
+  abas(); grade(); ajustes(); cores(); fontes(); programa(); aplicaCores(); resumo();
 }
 document.getElementById('enviar').onclick = async ()=>{
+  addLink(); // link digitado e não adicionado também vale
+  if(estado.programa.imagens.some(m=>m.subindo)){ document.getElementById('erro').textContent='Espera as imagens terminarem de subir.'; return; }
+  const pr = estado.programa;
   const corpo = {...estado, observacoes:document.getElementById('obs').value.trim(),
+    programa: {nome:pr.nome.trim(), links:pr.links, comoFunciona:pr.comoFunciona.trim(), imagens:pr.imagens.map(m=>({nome:m.nome, caminho:m.caminho}))},
     estilosNomes: estado.estilos.map(id=>ESTILOS.find(e=>e.id===id).nome), quando:new Date().toISOString(),
     fontesDetalhe: Object.fromEntries(Object.entries(estado.fontes).map(([p,l])=>[p, l.map(id=>{const f=achaF(p,id)||{};return {nome:f.nome, arquivo:f.local?f.arquivo:null, google:f.google||null};})]))};
   window.__escolha = corpo;

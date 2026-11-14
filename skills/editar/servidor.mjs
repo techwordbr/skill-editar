@@ -16,7 +16,10 @@ const saida = video
 
 const tipos = { '.mp4': 'video/mp4', '.mov': 'video/quicktime', '.webm': 'video/webm', '.mkv': 'video/x-matroska', '.m4v': 'video/mp4',
   '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.m4a': 'audio/mp4', '.aac': 'audio/aac', '.ogg': 'audio/ogg', '.opus': 'audio/ogg', '.flac': 'audio/flac' };
-const midia = video && tipos[path.extname(video).toLowerCase()]?.startsWith('audio') ? 'audio' : 'video';
+const pastaRefs = video
+  ? path.join(path.dirname(video), path.parse(video).name + '-referencias')
+  : path.join(pasta, 'referencias-enviadas');
+const midia = video &&tipos[path.extname(video).toLowerCase()]?.startsWith('audio') ? 'audio' : 'video';
 const mb = (b) => (b / 1048576).toFixed(1) + ' MB';
 
 // catálogo de fontes (fontes.json ao lado deste arquivo). "pasta" = onde estão os arquivos da pessoa.
@@ -67,6 +70,30 @@ const srv = http.createServer((req, res) => {
     }
     res.writeHead(200, { 'Content-Type': tipo, 'Accept-Ranges': 'bytes', 'Content-Length': tam });
     return fs.createReadStream(video).pipe(res);
+  }
+  // prints do programa que aparece no vídeo: salvos em <pasta do vídeo>/<nome>-referencias/
+  if (url.pathname === '/upload' && req.method === 'POST') {
+    const ext = path.extname(url.searchParams.get('nome') || '').toLowerCase();
+    if (!['.png', '.jpg', '.jpeg', '.webp', '.gif'].includes(ext)) { res.writeHead(415); return res.end('só imagem'); }
+    const partes = []; let tam = 0;
+    req.on('data', (c) => { tam += c.length; if (tam > 25 * 1048576) { res.writeHead(413); res.end('grande demais'); req.destroy(); } else partes.push(c); });
+    req.on('end', () => {
+      if (res.writableEnded) return;
+      fs.mkdirSync(pastaRefs, { recursive: true });
+      const base = path.parse(url.searchParams.get('nome')).name.replace(/[^\w\-]+/g, '-').slice(0, 40) || 'print';
+      const arq = path.join(pastaRefs, `${Date.now().toString(36)}-${base}${ext}`);
+      fs.writeFileSync(arq, Buffer.concat(partes));
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ caminho: arq, url: '/ref?f=' + encodeURIComponent(path.basename(arq)) }));
+    });
+    return;
+  }
+  if (url.pathname === '/ref') {
+    const alvo = path.join(pastaRefs, path.basename(url.searchParams.get('f') || ''));
+    if (!fs.existsSync(alvo)) { res.writeHead(404); return res.end(); }
+    const t = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif' }[path.extname(alvo).toLowerCase()] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': t });
+    return fs.createReadStream(alvo).pipe(res);
   }
   if (url.pathname === '/escolha' && req.method === 'POST') {
     let corpo = '';
